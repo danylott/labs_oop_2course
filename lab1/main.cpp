@@ -80,6 +80,7 @@ public:
     virtual void add(T data)=0;
     virtual bool kill(T data)=0;
     virtual bool remove(Node<T>* father, int index)=0;
+    virtual bool kill_rekurs(T data)=0;
 
 };
 
@@ -95,6 +96,9 @@ bool kill_binary(Node<T>*, T);
 
 template<typename T>
 bool remove_binary(Node<T>*, Node<T>*, int);
+
+template<typename T>
+bool kill_rekursive(Node<T>*, T);
 
 template<typename T>
 class VariableSonTree: public Tree<T> {
@@ -272,6 +276,27 @@ public:
         else
             return false;
     }
+
+    //видалення рівня починаючи зі знайденого елементу
+    bool kill_rekurs(T key) override {
+        Node<T>* pkey = find(root, key);
+        Node<T>* current;
+        if(!pkey)
+            return false;
+
+        if(pkey->dad->left == pkey) {
+            pkey->dad->left = nullptr;
+        }
+        else {
+            current = pkey->dad->left;
+            while(current->right != pkey)
+                current = current->right;
+            current->right = nullptr;
+            pkey->dad->left = nullptr;
+        }
+        delete_rekurs(pkey);
+        return true;
+    }
 };
 
 
@@ -351,6 +376,11 @@ public:
     bool remove(Node<T>* father, int index) override {
        return remove_binary(root, father, index);
     }
+
+    //рекурсивне видалення всього починаючи зі знайденого елементу
+    bool kill_rekurs(T key) override {
+        return kill_rekursive_binary(root, key);
+    }
 };
 
 template<typename T>
@@ -405,6 +435,11 @@ public:
     bool remove(Node<T>* father, int index) override {
         return remove_binary(root, father, index);
     }
+
+    //рекурсивне видалення всього починаючи зі знайденого елементу
+    bool kill_rekurs(T key) override {
+        return kill_rekursive_binary(root, key);
+    }
 };
 
 template<typename T>
@@ -423,7 +458,7 @@ template<typename T>
 void test_tree(Tree<T>* tree) {
     cout<<"Any tree"<<endl;
     int nn;
-    T  k, m;
+    T  k, m, l;
     //визначаємось з кількістю елементів
     cout << "Number = ";
     //cin >> nn;
@@ -448,6 +483,11 @@ void test_tree(Tree<T>* tree) {
     cout << k << endl;
     if (!tree->kill(k))
         cout << "no find " << endl;
+    tree->print();
+    cout << "Delete rekurs = ";
+    l = get_test_data<T>(6);
+    cout << l << endl;
+    tree->kill_rekurs(l);
     tree->print();  //виведення дерева
 }
 
@@ -612,5 +652,18 @@ bool remove_binary(Node<T>* root, Node<T>* father, int index) {
     }
     else
         return false;
+}
+
+template<typename T>
+bool kill_rekursive_binary(Node<T>* root, T key) {
+    Node<T>* pkey = find(root, key);
+    if(!pkey)
+        return false;
+    if(pkey->dad->left == pkey)
+        pkey->dad->left = nullptr;
+    if(pkey->dad->right == pkey)
+        pkey->dad->right = nullptr;
+    delete_rekurs(pkey);
+    return true;
 }
 
