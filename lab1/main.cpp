@@ -109,7 +109,7 @@ private:
             for(int i = 0; i < depth; i++)
                 cout << " --";
             cout << root->data << "\n";
-            vartree_print_rekurs(root->right, depth); // changes here (not depth + 1)
+            vartree_print_rekurs(root->right, depth); // тут зміни (not depth + 1)
         }
     }
 
@@ -179,13 +179,22 @@ public:
 
     //-------------------------------------------------------
     //вилучення елемента
+    // син зі своїми братами стає на місце видаленого батька
+    // сини синів залишаються зі своїми зв'язками
     bool kill(T key) override {
         Node<T>* current;
         Node<T>* down_current;
         if (Node<T> *pkey = find(root, key)) {
             if (pkey == root) {
                 root = root->left;
+                current = root;
+                while(current->right) {
+                    current = current->right;
+                    current->dad = root;
+                }
                 root->dad = nullptr;
+                current->right = pkey->right;
+                root->right = nullptr;
             } else if (!pkey->right && !pkey->left) { // вузол - лист
                 if ((pkey->dad)->left == pkey) {
                     (pkey->dad)->left = nullptr;
@@ -281,59 +290,149 @@ private:
 
 public:
     BinTree(T first_data) {
-
+        root = new Node<T>(first_data);//формування першого елемента дерева
     }
 
     ~BinTree() {
-        delete [] items;
+        delete_rekurs(root);
     }
     void print() override{
-        for(int i=0;i<size;i++) {
-            cout<<items[i]<<" ";
-        }
-        cout<<endl;
+        root->tree_print();
     }
 
     //--------------------------------------------------------
     //додавання елементів в кінець дерева 2, 3, ..., nn
     void add(T data) override{
-        if (size == capacity) {
-            grow_capacity();
+        int rand;
+        Node<T>* current = root;
+
+        // виключаємо можливість додавання однакових данних у дерево
+        // ця умова створена для глобалізації задачі, так як у пошуковому дереві відсутні
+        // однакові елементи
+        if(find(root, data))
+            return;
+        while(current->left || current->right) {
+
+            if(current->left && current->right) {
+                rand = rand_num(2);
+                if(rand) {
+                    current = current->right;
+                }
+                else {
+                    current = current->left;
+                }
+            }
+            else
+            if(current->left){
+                current = current->left;
+            }
+            else
+            if(current->right){
+                current = current->right;
+            }
+
         }
-        items[size]=data;
-        size++;
+
+
+        rand = rand_num(2);
+        if(current == root)
+            rand = 1;
+        if(rand) {
+            // тут зміни відносно попереднього current
+            Node<T> *el = new Node<T>(data, current, nullptr, nullptr);
+            current->left = el;
+        }
+        else {
+            Node<T> *el = new Node<T>(data, current, nullptr, nullptr);
+            current->right = el;
+        }
     }
 
-    //-------------------------------------------------------
-    //вставка елемента
-    bool insert(T key, T data) override{
-        int key_index = find(key);
-        if (key_index == -1) { // not found
-            return false;
-        }
-        if(size==capacity) {
-            grow_capacity();
-        }
-        key_index++; //insert after this index
-        for(int i = size; i>key_index;i--) {
-            items[i] = items[i-1];
-        }
-        items[key_index] = data;
-        size++;
-        return true;
-    }
-//
+
 //	//-------------------------------------------------------
 //	//вилучення елемента
-    bool remove(T key) override {
-        int key_index = find(key);
-        if (key_index == -1) { // not found
+    bool kill(T key) override {
+        Node<T>* current;
+        Node<T>* down_current;
+        if (Node<T> *pkey = find(root, key)) {
+            if (pkey == root) {
+                root = root->left;
+                current = root;
+                while(current->right)
+                    current = current->right;
+                root->dad = nullptr;
+                current->right = pkey->right;
+            } else if (!pkey->right && !pkey->left) { // вузол - лист
+
+                if ((pkey->dad)->left == pkey) {
+                    (pkey->dad)->left = nullptr;
+                } else {
+                    if ((pkey->dad)->right == pkey) {
+                        (pkey->dad)->right = nullptr;
+                    }
+                }
+
+            } else if (!pkey->left) { // вузол не має лівого сина
+                if((pkey->dad)->left == pkey) {
+                    (pkey->dad)->left = pkey->right;
+                    (pkey->right)->dad = pkey->dad;
+                }
+                if((pkey->dad)->right == pkey) {
+                    (pkey->dad)->right = pkey->right;
+                    (pkey->right)->dad = pkey->dad;
+                }
+
+            } else if (!pkey->right) { // вузол не має правого сина
+                if((pkey->dad)->left == pkey) {
+                    (pkey->dad)->left = pkey->left;
+                    (pkey->left)->dad = pkey->dad;
+                }
+                if((pkey->dad)->right == pkey) {
+                    (pkey->dad)->right = pkey->left;
+                    (pkey->left)->dad = pkey->dad;
+                }
+            }
+            else { // вузол має обох синів
+                if((pkey->dad)->left == pkey) {
+                    (pkey->dad)->left = pkey->left;
+                    (pkey->left)->dad = pkey->dad;
+                    current = pkey->left;
+                    while(current->right)
+                        current = current->right;
+                    current->right = pkey->right;
+                    (pkey->right)->dad = current;
+                }
+                else {
+                    if((pkey->dad)->right == pkey) {
+                        (pkey->dad)->right = pkey->left;
+                        (pkey->left)->dad = pkey->dad;
+                        current = pkey->left;
+                        while(current->right)
+                            current = current->right;
+                        current->right = pkey->right;
+                        (pkey->right)->dad = current;
+                    }
+                }
+            }
+            delete pkey;
+            return true;
+        }
+        return false;
+    }
+
+    // вилучення елемента за вказівником на батька та індексом
+    bool remove(Node<T>* father, int index) override {
+        if(!father)
             return false;
+        if (index == 0 && father->left) {
+            kill(father->left->data);
+            return true;
         }
-        for(int i=key_index;i<size-1;i++) {
-            items[i]=items[i+1];
+        if (index == 1 && father->right) {
+            kill(father->right->data);
+            return true;
         }
-        return true;
+        return false;
     }
 };
 
@@ -486,13 +585,23 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& vec) {
 //-------------------------
 int main() {
 
-    VariableSonTree<int>* tree = new VariableSonTree<int>{1};
-    tree->add(3);
-    tree->add(7);
-    tree->add(8);
-    tree->add(9);
-    tree->kill(8);
-    tree->print();
+    cout << endl << "Working with Variable Tree:" << endl;
+    VariableSonTree<int>* vartree = new VariableSonTree<int>{1};
+    vartree->add(3);
+    vartree->add(7);
+    vartree->add(8);
+    vartree->add(9);
+    vartree->kill(7);
+    vartree->print();
+
+    cout << endl << "Working with Binary Tree:" << endl;
+    BinTree<int>* bintree = new BinTree<int>{1};
+    bintree->add(3);
+    bintree->add(7);
+    bintree->add(8);
+    bintree->add(9);
+    bintree->kill(7);
+    bintree->print();
 //    using std::vector;
 //    test_doubles();
 //    test_int_vectors();
@@ -544,7 +653,6 @@ int main() {
 //пошук елемента за ключем
 template<typename T>
 Node<T> *find(Node<T> * const root, T data) {
-    Node<T> *pv = root;
     int head = 0;
     int tail = 1;
     Node<T>* current = nullptr;
