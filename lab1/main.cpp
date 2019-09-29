@@ -98,6 +98,12 @@ template<typename T>
 void delete_rekurs(Node<T>*);
 
 template<typename T>
+bool kill_binary(Node<T>*, T);
+
+template<typename T>
+bool remove_binary(Node<T>*, Node<T>*, int);
+
+template<typename T>
 class VariableSonTree: public Tree<T> {
 private:
     Node<T>* root;
@@ -182,103 +188,12 @@ public:
     // син зі своїми братами стає на місце видаленого батька
     // сини синів залишаються зі своїми зв'язками
     bool kill(T key) override {
-        Node<T>* current;
-        Node<T>* down_current;
-        if (Node<T> *pkey = find(root, key)) {
-            if (pkey == root) {
-                root = root->left;
-                current = root;
-                while(current->right) {
-                    current = current->right;
-                    current->dad = root;
-                }
-                root->dad = nullptr;
-                current->right = pkey->right;
-                root->right = nullptr;
-            } else if (!pkey->right && !pkey->left) { // вузол - лист
-                if ((pkey->dad)->left == pkey) {
-                    (pkey->dad)->left = nullptr;
-                } else {
-                    current = (pkey->dad)->left;
-                    while (current->right != pkey)
-                        current = current->right;
-                    current->right = nullptr;
-                }
-
-            } else if (!pkey->left) { // вузол не має синів
-                if((pkey->dad)->left == pkey) {
-                    (pkey->dad)->left = pkey->right;
-                }
-                else {
-                    current = (pkey->dad)->left;
-                    while(current->right!= pkey)
-                        current = current->right;
-                    current->right = pkey->right;
-                }
-
-            } else if (!pkey->right) { // вузол не має братів
-                if((pkey->dad)->left == pkey) {
-                    (pkey->dad)->left = pkey->left;
-                    (pkey->left)->dad = pkey->dad;
-                }
-                else {
-                    current = (pkey->dad)->left;
-                    while(current->right != pkey)
-                        current = current->right;
-                    current->right = pkey->left;
-                    (pkey->left)->dad = pkey->dad;
-                }
-            }
-            else { // вузол має все
-                if((pkey->dad)->left == pkey) {
-                    (pkey->dad)->left = pkey->left;
-                    (pkey->left)->dad = pkey->dad;
-                    current = pkey->left;
-                    while(current->right) {
-                        current = current->right;
-                        current->dad = pkey->dad;
-                    }
-                    current->right = pkey->right;
-                }
-                else {
-                    current = (pkey->dad)->left;
-                    while(current->right != pkey)
-                        current = current->right;
-                    current->right = pkey->left;
-
-                    down_current = pkey->left;
-                    down_current->dad = pkey->dad;
-                    while(down_current->right) {
-                        down_current = down_current->right;
-                        down_current->dad = pkey->dad;
-                    }
-                    down_current->right = pkey->right;
-                }
-            }
-            delete pkey;
-            return true;
-        }
-        return false;
+        return kill_binary(root, key);
     }
 
     // вилучення елемента за вказівником на батька та індексом
     bool remove(Node<T>* father, int index) override {
-        if(!father)
-            return false;
-        if(!father->left)
-            return false;
-        Node<T>* current = father->left;
-        int cntr = 0;
-        while(current->right && cntr < index) {
-            current = current->right;
-            cntr++;
-        }
-        if(cntr == index) {
-            kill(current->data); // кожен запис зустрічається лише 1 раз
-            return true;
-        }
-        else
-            return false;
+        return remove_binary(root, father, index);
     }
 };
 
@@ -352,72 +267,61 @@ public:
 //	//-------------------------------------------------------
 //	//вилучення елемента
     bool kill(T key) override {
-        Node<T>* current;
-        Node<T>* down_current;
-        if (Node<T> *pkey = find(root, key)) {
-            if (pkey == root) {
-                root = root->left;
-                current = root;
-                while(current->right)
-                    current = current->right;
-                root->dad = nullptr;
-                current->right = pkey->right;
-            } else if (!pkey->right && !pkey->left) { // вузол - лист
+       return kill_binary(root, key);
+    }
 
-                if ((pkey->dad)->left == pkey) {
-                    (pkey->dad)->left = nullptr;
-                } else {
-                    if ((pkey->dad)->right == pkey) {
-                        (pkey->dad)->right = nullptr;
-                    }
-                }
+    // вилучення елемента за вказівником на батька та індексом
+    bool remove(Node<T>* father, int index) override {
+       return remove_binary(root, father, index);
+    }
+};
 
-            } else if (!pkey->left) { // вузол не має лівого сина
-                if((pkey->dad)->left == pkey) {
-                    (pkey->dad)->left = pkey->right;
-                    (pkey->right)->dad = pkey->dad;
-                }
-                if((pkey->dad)->right == pkey) {
-                    (pkey->dad)->right = pkey->right;
-                    (pkey->right)->dad = pkey->dad;
-                }
+template<typename T>
+class SearchTree: public Tree<T> {
+private:
+    Node<T>* root;
 
-            } else if (!pkey->right) { // вузол не має правого сина
-                if((pkey->dad)->left == pkey) {
-                    (pkey->dad)->left = pkey->left;
-                    (pkey->left)->dad = pkey->dad;
-                }
-                if((pkey->dad)->right == pkey) {
-                    (pkey->dad)->right = pkey->left;
-                    (pkey->left)->dad = pkey->dad;
-                }
-            }
-            else { // вузол має обох синів
-                if((pkey->dad)->left == pkey) {
-                    (pkey->dad)->left = pkey->left;
-                    (pkey->left)->dad = pkey->dad;
-                    current = pkey->left;
-                    while(current->right)
-                        current = current->right;
-                    current->right = pkey->right;
-                    (pkey->right)->dad = current;
-                }
-                else {
-                    if((pkey->dad)->right == pkey) {
-                        (pkey->dad)->right = pkey->left;
-                        (pkey->left)->dad = pkey->dad;
-                        current = pkey->left;
-                        while(current->right)
-                            current = current->right;
-                        current->right = pkey->right;
-                        (pkey->right)->dad = current;
-                    }
-                }
-            }
-            delete pkey;
-            return true;
+public:
+    SearchTree(T first_data) {
+        root = new Node<T>(first_data);//формування першого елемента дерева
+    }
+
+    ~SearchTree() {
+        delete_rekurs(root);
+    }
+    void print() override{
+        root->tree_print();
+    }
+
+
+    void add(T data) override{
+        if(find(root, data))
+            return;
+        Node<T>* current = root;
+        Node<T>* prev = root;
+        while(current) {
+            prev = current;
+            if(data < current->data)
+                current = current->left;
+            else
+            if(data > current->data)
+                current = current->right;
         }
-        return false;
+        if(data < prev->data) {
+            Node<T> *el = new Node<T>(data, prev, nullptr, nullptr);
+            prev->left = el;
+        }
+        if(data > prev->data) {
+            Node<T> *el = new Node<T>(data, prev, nullptr, nullptr);
+            prev->right = el;
+        }
+    }
+
+
+//	//-------------------------------------------------------
+//	//вилучення елемента
+    bool kill(T key) override {
+        return kill_binary(root, key);
     }
 
     // вилучення елемента за вказівником на батька та індексом
@@ -602,6 +506,15 @@ int main() {
     bintree->add(9);
     bintree->kill(7);
     bintree->print();
+
+    cout << endl << "Working with Search Tree:" << endl;
+    SearchTree<int>* searchtree = new SearchTree<int>{1};
+    searchtree->add(3);
+    searchtree->add(4);
+    searchtree->add(5);
+    searchtree->add(9);
+    searchtree->kill(7);
+    searchtree->print();
 //    using std::vector;
 //    test_doubles();
 //    test_int_vectors();
@@ -690,5 +603,95 @@ void delete_rekurs(Node<T>* root) {
             delete_rekurs(root->left);
         delete root;
     }
+}
+
+template<typename T>
+bool kill_binary(Node<T>* root, T key) {
+    Node<T>* current;
+    Node<T>* down_current;
+    if (Node<T> *pkey = find(root, key)) {
+        if (pkey == root) {
+            root = root->left;
+            current = root;
+            while(current->right)
+                current = current->right;
+            root->dad = nullptr;
+            current->right = pkey->right;
+        } else if (!pkey->right && !pkey->left) { // вузол - лист
+
+            if ((pkey->dad)->left == pkey) {
+                (pkey->dad)->left = nullptr;
+            } else {
+                if ((pkey->dad)->right == pkey) {
+                    (pkey->dad)->right = nullptr;
+                }
+            }
+
+        } else if (!pkey->left) { // вузол не має лівого сина
+            if((pkey->dad)->left == pkey) {
+                (pkey->dad)->left = pkey->right;
+                (pkey->right)->dad = pkey->dad;
+            }
+            if((pkey->dad)->right == pkey) {
+                (pkey->dad)->right = pkey->right;
+                (pkey->right)->dad = pkey->dad;
+            }
+
+        } else if (!pkey->right) { // вузол не має правого сина
+            if((pkey->dad)->left == pkey) {
+                (pkey->dad)->left = pkey->left;
+                (pkey->left)->dad = pkey->dad;
+            }
+            if((pkey->dad)->right == pkey) {
+                (pkey->dad)->right = pkey->left;
+                (pkey->left)->dad = pkey->dad;
+            }
+        }
+        else { // вузол має обох синів
+            if((pkey->dad)->left == pkey) {
+                (pkey->dad)->left = pkey->left;
+                (pkey->left)->dad = pkey->dad;
+                current = pkey->left;
+                while(current->right)
+                    current = current->right;
+                current->right = pkey->right;
+                (pkey->right)->dad = current;
+            }
+            else {
+                if((pkey->dad)->right == pkey) {
+                    (pkey->dad)->right = pkey->left;
+                    (pkey->left)->dad = pkey->dad;
+                    current = pkey->left;
+                    while(current->right)
+                        current = current->right;
+                    current->right = pkey->right;
+                    (pkey->right)->dad = current;
+                }
+            }
+        }
+        delete pkey;
+        return true;
+    }
+    return false;
+}
+
+template<typename T>
+bool remove_binary(Node<T>* root, Node<T>* father, int index) {
+    if(!father)
+        return false;
+    if(!father->left)
+        return false;
+    Node<T>* current = father->left;
+    int cntr = 0;
+    while(current->right && cntr < index) {
+        current = current->right;
+        cntr++;
+    }
+    if(cntr == index) {
+        kill_binary(root, current->data); // кожен запис зустрічається лише 1 раз
+        return true;
+    }
+    else
+        return false;
 }
 
