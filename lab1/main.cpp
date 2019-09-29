@@ -1,10 +1,3 @@
-/*
- * doubly_linked_list.cpp
- *
- *  Created on: Sep 16, 2019
- *      Author: KZ
- */
-
 #include <iostream>
 #include <vector>
 #include <random>
@@ -424,77 +417,40 @@ double get_test_data<double>(int index) {
     return index+0.1;
 }
 
-//
-//
-//template<typename T>
-//void test_list(List<T>* my_list) {
-//    cout<<"Any list"<<endl;
-//    int nn;
-//    T  k, m;
-//    //визначаємось з кількістю елементів
-//    cout << "Number = ";
-//    //cin >> nn;
-//    nn = 7;
-//    cout << nn << endl;
-//    //BinTree<double> my_list { 0.1 };
-//
-//    for (int i = 2; i <= nn; i++)
-//        my_list->add(get_test_data<T>(i));
-//    my_list->print();
-//    //вставка елемента k після елемента m
-//    cout << "Insert = ";
-//    //cin >> k;
-//    k = get_test_data<T>(10);
-//    cout << k << endl;
-//    cout << "After = ";
-//    //cin >> m;
-//    m = get_test_data<T>(4);
-//    cout << m << endl;
-//    my_list->insert(m, k);
-//    my_list->print();  //виведення дерева
-//    //вилучення елемента k
-//    cout << "Delete = ";
-//    //cin >> k;
-//    k = get_test_data<T>(5);
-//    cout << k << endl;
-//    if (!my_list->remove(k))
-//        cout << "no find " << endl;
-//    my_list->print();  //виведення дерева
-//}
-//
-//void test_doubles() {
-//    cout<<"Doubles"<<endl;
-//    double nn, k, m;
-//    //визначаємось з кількістю елементів
-//    cout << "Number = ";
-//    //cin >> nn;
-//    nn = 7;
-//    cout << nn << endl;
-//    BinTree<double> my_list { 0.1 };
-//
-//    for (double i = 1.1; i <= nn; i++)
-//        my_list.add(i);
-//    my_list.print();
-//    //вставка елемента k після елемента m
-//    cout << "Insert = ";
-//    //cin >> k;
-//    k = 4.2;
-//    cout << k << endl;
-//    cout << "After = ";
-//    //cin >> m;
-//    m = 2.1;
-//    cout << m << endl;
-//    my_list.insert(m, k);
-//    my_list.print();  //виведення дерева
-////	//вилучення елемента k
-////	cout << "Delete = ";
-////	//cin >> k;
-////	k = 5.1;
-////	cout << k << endl;
-////	if (!my_list.remove(k))
-////		cout << "no find " << endl;
-////	my_list.print();  //виведення дерева
-//}
+
+
+template<typename T>
+void test_tree(Tree<T>* tree) {
+    cout<<"Any tree"<<endl;
+    int nn;
+    T  k, m;
+    //визначаємось з кількістю елементів
+    cout << "Number = ";
+    //cin >> nn;
+    nn = 7;
+    cout << nn << endl;
+    //BinTree<double> tree { 0.1 };
+
+    for (int i = 2; i <= nn; i++)
+        tree->add(get_test_data<T>(i));
+    tree->print();
+    //вставка елемента k після елемента m
+    cout << "Insert = ";
+    //cin >> k;
+    k = get_test_data<T>(10);
+    cout << k << endl;
+    tree->add(k);
+    tree->print();  //виведення дерева
+    //вилучення елемента k
+    cout << "Delete = ";
+    //cin >> k;
+    k = get_test_data<T>(5);
+    cout << k << endl;
+    if (!tree->kill(k))
+        cout << "no find " << endl;
+    tree->print();  //виведення дерева
+}
+
 template<typename T>
 std::ostream& operator<<(std::ostream& os, const std::vector<T>& vec) {
     os<<"[";
@@ -506,133 +462,22 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& vec) {
     os<<" ]";
     return os;
 }
-//
-//void test_int_vectors() {
-//    cout<<"Int vectors"<<endl;
-//    using std::vector;
-//    int nn;
-//    vector<int> k, m;
-//    //визначаємось з кількістю елементів
-//    cout << "Number = ";
-//    //cin >> nn;
-//    nn = 7;
-//    cout << nn << endl;
-//    BinTree<vector<int>> my_list { { 1,4,5} };
-//
-//    for (int i = 2; i <= nn; i++)
-//        my_list.add({i,4,5});
-//    my_list.print();
-//
-////	//вставка елемента k після елемента m
-////	cout << "Insert = ";
-////	//cin >> k;
-////	k = 4.2;
-////	cout << k << endl;
-////	cout << "After = ";
-////	//cin >> m;
-////	m = 2.1;
-////	cout << m << endl;
-////	my_list.insert(m, k);
-////	my_list.print();  //виведення дерева
-////	//вилучення елемента k
-////	cout << "Delete = ";
-////	//cin >> k;
-////	k = 5.1;
-////	cout << k << endl;
-////	if (!my_list.remove(k))
-////		cout << "no find " << endl;
-////	my_list.print();  //виведення дерева
-//}
-//
-//void test_int_vector_vectors() {
-//    cout<<"Int vector vectors"<<endl;
-//    using std::vector;
-//    int nn;
-//    vector<vector<int>> k, m;
-//    //визначаємось з кількістю елементів
-//    cout << "Number = ";
-//    //cin >> nn;
-//    nn = 7;
-//    cout << nn << endl;
-//    VariableSonTree<vector<vector<int>>> my_list { { { 0,1}, {1,9} } };
-//
-//    for (int i = 2; i <= nn; i++)
-//        my_list.add({ { 0,i}, {i,9} });
-//    my_list.print();
-//}
+
 //-------------------------
 int main() {
+    using std::vector;
 
     cout << endl << "Working with Variable Tree:" << endl;
-    VariableSonTree<int>* vartree = new VariableSonTree<int>{1};
-    vartree->add(3);
-    vartree->add(7);
-    vartree->add(8);
-    vartree->add(9);
-    vartree->kill(7);
-    vartree->print();
+    Tree<vector<int>>* tree1 = new VariableSonTree<vector<int>>({1,2});
+    test_tree(tree1);
 
     cout << endl << "Working with Binary Tree:" << endl;
-    BinTree<int>* bintree = new BinTree<int>{1};
-    bintree->add(3);
-    bintree->add(7);
-    bintree->add(8);
-    bintree->add(9);
-    bintree->kill(7);
-    bintree->print();
+    BinTree<double>* tree2 = new BinTree<double>(0.1);
+    test_tree(tree2);
 
     cout << endl << "Working with Search Tree:" << endl;
-    SearchTree<int>* searchtree = new SearchTree<int>{1};
-    searchtree->add(3);
-    searchtree->add(7);
-    searchtree->add(8);
-    searchtree->add(9);
-    searchtree->kill(7);
-    searchtree->print();
-//    using std::vector;
-//    test_doubles();
-//    test_int_vectors();
-//    test_int_vector_vectors();
-//
-//    BinTree<double>* list1 = new BinTree<double>(0.1);
-//    test_list(list1);
-//    List<vector<int>>* list2 = new VariableSonTree<vector<int>>({1,2});
-//    test_list(list2);
-//
-//    int nn, k, m;
-//    //визначаємось з кількістю елементів
-//    cout << "Number = ";
-//    //cin >> nn;
-//    nn = 7;
-//    cout << nn << endl;
-//    BinTree<int> my_list { 1 };
-//
-//    //додавання елементів в кінець дерева 2, 3, ..., nn
-//    for (int i = 2; i <= nn; i++)
-//        my_list.add(i);
-//    my_list.print();  //виведення дерева
-//    //вставка елемента k після елемента m
-//    cout << "Insert = ";
-//    //cin >> k;
-//    k = 42;
-//    cout << k << endl;
-//    cout << "After = ";
-//    //cin >> m;
-//    m = 4;
-//    cout << m << endl;
-//    my_list.insert(m, k);
-//    my_list.print();  //виведення дерева
-//    //вилучення елемента k
-//    cout << "Delete = ";
-//    //cin >> k;
-//    k = 5;
-//    cout << k << endl;
-//    if (!my_list.remove(k))
-//        cout << "no find " << endl;
-//    my_list.print();  //виведення дерева
-////
-////	delete pbeg;  //знищення дерева
-//    //system("pause");
+    Tree<int>* tree3 = new SearchTree<int>{1};
+    test_tree(tree3);
     return 0;
 }
 
