@@ -26,6 +26,8 @@ int rand_num(int max) {
     return int(dist(gen));
 }
 
+int const COUNT = 10000; // max count of elements
+
 template<typename T>
 class Node {
 public:
@@ -38,7 +40,6 @@ public:
     //--------------------------------------------------------
     //формування першого елемента дерева
     Node(T data) {
-        //TODO: pass by const ref
         this->data = data;
         left = nullptr;
         right = nullptr;
@@ -91,42 +92,76 @@ template<typename T>
 Node<T> *find(Node<T> * const, T);
 
 template<typename T>
-class DoublyLinkedList: public List<T> {
+class VariableSonTree: public Tree<T> {
 private:
-    Node<T>* begin;
-    Node<T>* end;
-public:
-    DoublyLinkedList(T first_data) {
-        begin = new Node<T>(first_data);//формування першого елемента дерева
-        end = begin;	//список складаєтьсчя з одного елемента
+    Node<T>* root;
 
-    }
-
-    ~DoublyLinkedList() {
-        Node<T> *current=begin, *to_delete;
-        while (current) {
-            to_delete = current;
-            current = current->next;
-            delete to_delete;
+    void delete_rekurs(T root) {
+        if(root) {
+            if(root->right)
+                delete_rekurs(root->right);
+            if(root->left)
+                delete_rekurs(root->left);
+            delete root;
         }
     }
+
+public:
+    VariableSonTree(T first_data) {
+        root = new Node<T>(first_data);//формування першого елемента дерева
+    }
+
+    ~VariableSonTree() {
+        delete_rekurs(root);
+    }
     void print() override {
-        begin->list_print();
+        root->list_print();
     }
 
     //--------------------------------------------------------
-    //додавання елементів в кінець дерева 2, 3, ..., nn
+    /*  Додавання елементів відбувається для дерева з довільною кількістю
+     *  дітей рандомно, тобто на кожному кроці обираємо куди піти - до брата, чи до сина
+     *  та відповідно переміщаємось, поки не потрапимо до листа, туди й додаємо - теж рандомно:
+     *  або як сина, або як брата
+     */
     void add(T data) override{
-        Node<T> *pv = new Node<T>(data, end, nullptr);
+        Node<T> *el = new Node<T>(data, nullptr, nullptr);
+            int rand;
+            Node<T>* current = root;
+            while(current->left || current->right) {
 
-        end->next = pv;
-        end = pv;
+                if(current->left && current->right) {
+                    rand = rand_num(1);
+                    if(rand) {
+                        current = current->right;
+                    }
+                    else {
+                        current = current->left;
+                    }
+                }
+                else
+                if(current->left){
+                    current = current->left;
+                }
+                else
+                if(current->right){
+                    current = current->right;
+                }
+
+            }
+        rand = rand_num(1);
+        if(rand) {
+            current->left = el;
+        }
+        else {
+            current->right = el;
+        }
     }
 
     //-------------------------------------------------------
     //вставка елемента
     bool insert(T key, T data) override {
-        if (Node<T> *pkey = find(begin, key)) {
+        if (Node<T> *pkey = find(root, key)) {
 
             //зв`язок нового вузла з наступним
             //зв`язок нового вузла з попереднім
@@ -149,10 +184,10 @@ public:
     //-------------------------------------------------------
     //вилучення елемента
     bool remove(T key) override {
-        if (Node<T> *pkey = find(begin, key)) {
-            if (pkey == begin) {
-                begin = begin->next;
-                begin->prev = nullptr;
+        if (Node<T> *pkey = find(root, key)) {
+            if (pkey == root) {
+                root = root->next;
+                root->prev = nullptr;
             } else if (pkey == end) {
                 end = end->prev;
                 end->next = nullptr;
@@ -396,7 +431,7 @@ void test_int_vector_vectors() {
     //cin >> nn;
     nn = 7;
     cout << nn << endl;
-    DoublyLinkedList<vector<vector<int>>> my_list { { { 0,1}, {1,9} } };
+    VariableSonTree<vector<vector<int>>> my_list { { { 0,1}, {1,9} } };
 
     for (int i = 2; i <= nn; i++)
         my_list.add({ { 0,i}, {i,9} });
@@ -411,7 +446,7 @@ int main() {
 
     ArrayList<double>* list1 = new ArrayList<double>(0.1);
     test_list(list1);
-    List<vector<int>>* list2 = new DoublyLinkedList<vector<int>>({1,2});
+    List<vector<int>>* list2 = new VariableSonTree<vector<int>>({1,2});
     test_list(list2);
 
     int nn, k, m;
@@ -454,13 +489,33 @@ int main() {
 //--------------------------------------------------------
 //пошук елемента за ключем
 template<typename T>
-Node<T> *find(Node<T> * const pbeg, T d) {
-    Node<T> *pv = pbeg;
-    while (pv) {
-        if (pv->data == d)
+Node<T> *find(Node<T> * const root, T data) {
+    Node<T> *pv = root;
+    int head = 0;
+    int tail = 1;
+    Node<T>* current = nullptr;
+    Node<T>* queue[COUNT];
+    queue[head] = root;
+    bool finded = false;
+    while (head < tail) {
+        current = queue[head];
+        head++;
+        if (current->data == data) {
+            finded = true;
             break;
-        pv = pv->next;
+        }
+        if(current->right) {
+            queue[tail] = current->right;
+            tail++;
+        }
+        if(current->left) {
+            queue[tail] = current->left;
+            tail++;
+        }
     }
-    return pv;
+    if(finded)
+        return current;
+    else
+        return nullptr;
 }
 
