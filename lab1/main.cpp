@@ -32,6 +32,7 @@ template<typename T>
 class Node {
 public:
     T data;
+    Node* dad;
     // son for tree with any count of children
     Node* left;
     // brother for tree with any count of children
@@ -43,10 +44,12 @@ public:
         this->data = data;
         left = nullptr;
         right = nullptr;
+        dad = nullptr;
     }
 
-    Node(T data, Node<T>* left, Node<T>* right) {
+    Node(T data, Node<T>* dad, Node<T>* left, Node<T>* right) {
         this->data = data;
+        this->dad = dad;
         this->left = left;
         this->right = right;
     }
@@ -115,7 +118,7 @@ public:
         delete_rekurs(root);
     }
     void print() override {
-        root->list_print();
+        root->tree_print();
     }
 
     //--------------------------------------------------------
@@ -125,7 +128,6 @@ public:
      *  або як сина, або як брата
      */
     void add(T data) override{
-        Node<T> *el = new Node<T>(data, nullptr, nullptr);
             int rand;
             Node<T>* current = root;
             while(current->left || current->right) {
@@ -149,11 +151,14 @@ public:
                 }
 
             }
+
         rand = rand_num(1);
         if(rand) {
+            Node<T> *el = new Node<T>(data, current, nullptr, nullptr);
             current->left = el;
         }
         else {
+            Node<T> *el = new Node<T>(data, current->dad, nullptr, nullptr);
             current->right = el;
         }
     }
@@ -183,7 +188,7 @@ public:
 
     //-------------------------------------------------------
     //вилучення елемента
-    bool remove(T key) override {
+    bool kill(T key) override {
         if (Node<T> *pkey = find(root, key)) {
             if (pkey == root) {
                 root = root->next;
