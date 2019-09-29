@@ -85,8 +85,8 @@ class Tree {
 public:
     virtual void print()=0;
     virtual void add(T data)=0;
-    virtual bool remove(Node<T> father, int index)=0;
     virtual bool kill(T data)=0;
+    virtual bool remove(Node<T>* father, int index)=0;
 
 };
 
@@ -165,45 +165,119 @@ public:
 
     //-------------------------------------------------------
     //вставка елемента
-    bool insert(T key, T data) override {
-        if (Node<T> *pkey = find(root, key)) {
-
-            //зв`язок нового вузла з наступним
-            //зв`язок нового вузла з попереднім
-            Node<T> *pv = new Node<T>(data, pkey, pkey->next);
-
-            pkey->next = pv;  //зв`язок попереднього з новим вузлом
-            //зв`язок наступного з новим вузлом
-            if (pkey != end)
-                (pv->next)->prev = pv;
-            else
-                end = pv; //якщо вузол стає останнім, змінюємо покажчик на кінець
-            return true;
-        }
-        return false;  //місце для вставки не було знайдено
-        //можна було б реалізовувати іншу обробку
-        //наприклад, вставку в кінець дерева,
-        //передбачивши можливу порожність дерева
-    }
+//    bool insert(T key, T data) override {
+//        if (Node<T> *pkey = find(root, key)) {
+//
+//            //зв`язок нового вузла з наступним
+//            //зв`язок нового вузла з попереднім
+//            Node<T> *pv = new Node<T>(data, pkey, pkey->next);
+//
+//            pkey->next = pv;  //зв`язок попереднього з новим вузлом
+//            //зв`язок наступного з новим вузлом
+//            if (pkey != end)
+//                (pv->next)->prev = pv;
+//            else
+//                end = pv; //якщо вузол стає останнім, змінюємо покажчик на кінець
+//            return true;
+//        }
+//        return false;  //місце для вставки не було знайдено
+//        //можна було б реалізовувати іншу обробку
+//        //наприклад, вставку в кінець дерева,
+//        //передбачивши можливу порожність дерева
+//    }
 
     //-------------------------------------------------------
     //вилучення елемента
     bool kill(T key) override {
+        Node<T>* current;
+        Node<T>* down_current;
         if (Node<T> *pkey = find(root, key)) {
             if (pkey == root) {
-                root = root->next;
-                root->prev = nullptr;
-            } else if (pkey == end) {
-                end = end->prev;
-                end->next = nullptr;
-            } else {
-                (pkey->prev)->next = pkey->next;
-                (pkey->next)->prev = pkey->prev;
+                root = root->left;
+                root->dad = nullptr;
+            } else if (!pkey->right && !pkey->left) { // вузол - лист
+                if ((pkey->dad)->left == pkey) {
+                    (pkey->dad)->left = nullptr;
+                } else {
+                    current = (pkey->dad)->left;
+                    while (current->right != pkey)
+                        current = current->right;
+                    current->right = nullptr;
+                }
+
+            } else if (!pkey->left) { // вузол не має синів
+                if((pkey->dad)->left == pkey) {
+                    (pkey->dad)->left = pkey->right;
+                }
+                else {
+                    current = (pkey->dad)->left;
+                    while(current->right!= pkey)
+                        current = current->right;
+                    current->right = pkey->right;
+                }
+
+            } else if (!pkey->right) { // вузол не має братів
+                if((pkey->dad)->left == pkey) {
+                    (pkey->dad)->left = pkey->left;
+                    (pkey->left)->dad = pkey->dad;
+                }
+                else {
+                    current = (pkey->dad)->left;
+                    while(current->right != pkey)
+                        current = current->right;
+                    current->right = pkey->left;
+                    (pkey->left)->dad = pkey->dad;
+                }
+            }
+            else { // вузол має все
+                if((pkey->dad)->left == pkey) {
+                    (pkey->dad)->left = pkey->left;
+                    (pkey->left)->dad = pkey->dad;
+                    current = pkey->left;
+                    while(current->right) {
+                        current = current->right;
+                        current->dad = pkey->dad;
+                    }
+                    current->right = pkey->right;
+                }
+                else {
+                    current = (pkey->dad)->left;
+                    while(current->right != pkey)
+                        current = current->right;
+                    current->right = pkey->left;
+
+                    down_current = pkey->left;
+                    down_current->dad = pkey->dad;
+                    while(down_current->right) {
+                        down_current = down_current->right;
+                        down_current->dad = pkey->dad;
+                    }
+                    down_current->right = pkey->right;
+                }
             }
             delete pkey;
             return true;
         }
         return false;
+    }
+
+    bool remove(Node<T>* father, int index) override {
+        if(!father)
+            return false;
+        if(!father->left)
+            return false;
+        Node<T>* current = father->left;
+        int cntr = 0;
+        while(current->right && cntr < index) {
+            current = current->right;
+            cntr++;
+        }
+        if(cntr == index) {
+            kill(current->data);
+            return true;
+        }
+        else
+            return false;
     }
 };
 
