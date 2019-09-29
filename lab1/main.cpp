@@ -70,11 +70,11 @@ private:
     void tree_print_rekurs(Node *root, int depth = 1) {
         if (root != nullptr)
         {
-            printBinTree(root->prev, depth + 1);
+            tree_print_rekurs(root->left, depth + 1);
             for(int i = 0; i < depth; i++)
                 cout << " --";
             cout << root->data << "\n";
-            printBinTree(root->next, depth + 1);
+            tree_print_rekurs(root->right, depth + 1);
         }
     }
 
@@ -99,7 +99,7 @@ class VariableSonTree: public Tree<T> {
 private:
     Node<T>* root;
 
-    void delete_rekurs(T root) {
+    void delete_rekurs(Node<T>* root) {
         if(root) {
             if(root->right)
                 delete_rekurs(root->right);
