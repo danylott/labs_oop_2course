@@ -188,12 +188,96 @@ public:
     // син зі своїми братами стає на місце видаленого батька
     // сини синів залишаються зі своїми зв'язками
     bool kill(T key) override {
-        return kill_binary(root, key);
+        Node<T>* current;
+        Node<T>* down_current;
+        if (Node<T> *pkey = find(root, key)) {
+            if (pkey == root) {
+                root = root->left;
+                root->dad = nullptr;
+            } else if (!pkey->right && !pkey->left) { // вузол - лист
+                if ((pkey->dad)->left == pkey) {
+                    (pkey->dad)->left = nullptr;
+                } else {
+                    current = (pkey->dad)->left;
+                    while (current->right != pkey)
+                        current = current->right;
+                    current->right = nullptr;
+                }
+
+            } else if (!pkey->left) { // вузол не має синів
+                if((pkey->dad)->left == pkey) {
+                    (pkey->dad)->left = pkey->right;
+                }
+                else {
+                    current = (pkey->dad)->left;
+                    while(current->right!= pkey)
+                        current = current->right;
+                    current->right = pkey->right;
+                }
+
+            } else if (!pkey->right) { // вузол не має братів
+                if((pkey->dad)->left == pkey) {
+                    (pkey->dad)->left = pkey->left;
+                    (pkey->left)->dad = pkey->dad;
+                }
+                else {
+                    current = (pkey->dad)->left;
+                    while(current->right != pkey)
+                        current = current->right;
+                    current->right = pkey->left;
+                    (pkey->left)->dad = pkey->dad;
+                }
+            }
+            else { // вузол має все
+                if((pkey->dad)->left == pkey) {
+                    (pkey->dad)->left = pkey->left;
+                    (pkey->left)->dad = pkey->dad;
+                    current = pkey->left;
+                    while(current->right) {
+                        current = current->right;
+                        current->dad = pkey->dad;
+                    }
+                    current->right = pkey->right;
+                }
+                else {
+                    current = (pkey->dad)->left;
+                    while(current->right != pkey)
+                        current = current->right;
+                    current->right = pkey->left;
+
+                    down_current = pkey->left;
+                    down_current->dad = pkey->dad;
+                    while(down_current->right) {
+                        down_current = down_current->right;
+                        down_current->dad = pkey->dad;
+                    }
+                    down_current->right = pkey->right;
+                }
+            }
+            delete pkey;
+            return true;
+        }
+        return false;
     }
 
     // вилучення елемента за вказівником на батька та індексом
     bool remove(Node<T>* father, int index) override {
-        return remove_binary(root, father, index);
+        if(!father)
+            return false;
+        if(!father->left)
+            return false;
+        Node<T>* current = father->left;
+        int cntr = 0;
+        while(current->right && cntr < index) {
+            current = current->right;
+            cntr++;
+        }
+        if(cntr == index) {
+            kill(current->data); // кожен запис зустрічається лише 1 раз
+            return true;
+        }
+        else
+            return false;
     }
 };
 
@@ -326,17 +410,7 @@ public:
 
     // вилучення елемента за вказівником на батька та індексом
     bool remove(Node<T>* father, int index) override {
-        if(!father)
-            return false;
-        if (index == 0 && father->left) {
-            kill(father->left->data);
-            return true;
-        }
-        if (index == 1 && father->right) {
-            kill(father->right->data);
-            return true;
-        }
-        return false;
+        return remove_binary(root, father, index);
     }
 };
 
@@ -510,8 +584,8 @@ int main() {
     cout << endl << "Working with Search Tree:" << endl;
     SearchTree<int>* searchtree = new SearchTree<int>{1};
     searchtree->add(3);
-    searchtree->add(4);
-    searchtree->add(5);
+    searchtree->add(7);
+    searchtree->add(8);
     searchtree->add(9);
     searchtree->kill(7);
     searchtree->print();
