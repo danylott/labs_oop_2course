@@ -443,6 +443,148 @@ public:
     }
 };
 
+
+
+
+//-------------------------
+//-------------------------
+//-------------------------
+
+// PART 2
+
+//-------------------------
+//-------------------------
+//-------------------------
+
+using std::tm;
+using std::time_t;
+
+
+
+
+
+
+class Date {
+private:
+    int year;
+    int month;
+    int day;
+    int hours;
+    int minutes;
+    int seconds;
+public:
+    Date(int y = 1900, int m = 1, int d = 1, int h = 0, int i = 0, int s = 0)  {
+        year = y;
+        month = m;
+        day = d;
+        hours = h;
+        minutes = i;
+        seconds = s;
+    }
+
+    // This is automatically called when '+' is used with
+    // between two Complex objects
+    Date operator - (Date &obj) {
+        time_t time1 = std::mktime(make_tm());
+        time_t time2 = std::mktime(obj.make_tm());
+        time_t difference = (time1 - time2);
+        struct tm *tminfo;
+        tminfo = localtime ( &difference );
+        Date res = make_date(tminfo);
+        return res;
+    }
+
+    Date operator + (Date &obj) {
+        time_t time1 = std::mktime(make_tm());
+        time_t time2 = std::mktime(obj.make_tm());
+        time_t difference = (time1 + time2);
+        struct tm *tminfo;
+        tminfo = localtime ( &difference );
+        Date res = make_date(tminfo);
+        return res;
+    }
+
+    bool operator < (Date &obj) {
+        time_t time1 = std::mktime(make_tm());
+        time_t time2 = std::mktime(obj.make_tm());
+        return (time1 < time2);
+    }
+
+    bool operator == (Date &obj) {
+        time_t time1 = std::mktime(make_tm());
+        time_t time2 = std::mktime(obj.make_tm());
+        return (time1 == time2);
+    }
+
+    bool operator > (Date &obj) {
+        time_t time1 = std::mktime(make_tm());
+        time_t time2 = std::mktime(obj.make_tm());
+        return (time1 > time2);
+    }
+
+    // Тут також виводиться день тижня, тому це найкращий вивід
+    void print() {
+        time_t time1 = std::mktime(make_tm());
+        std::cout << asctime (localtime(&time1));
+    }
+
+
+    // Звичайний вивід
+    void simple_print() {
+        std::cout << year << "-" << month << "-" << day << " " << hours << ":" << minutes << ":" << seconds;
+    }
+
+    tm* make_tm()
+    {
+        tm* tm = new struct tm;
+        tm->tm_year = year - 1900;
+        tm->tm_mon = month - 1;
+        tm->tm_mday = day;
+        tm->tm_hour = hours;
+        tm->tm_min = minutes;
+        tm->tm_sec = seconds;
+        return tm;
+    }
+    Date make_date(tm* tminfo)
+    {
+        Date res;
+        res.year = tminfo->tm_year + 1900;
+        res.month = tminfo->tm_mon + 1;
+        res.day = tminfo->tm_mday;
+        res.hours = tminfo->tm_hour;
+        res.minutes = tminfo->tm_min;
+        res.seconds = tminfo->tm_sec;
+        return res;
+    }
+
+    bool check_date() {
+        cout << std::mktime(make_tm());
+        if (std::mktime(make_tm()) == -1)
+            return false;
+        return true;
+    }
+};
+
+template<typename T>
+std::ostream& operator<<(std::ostream& os, const std::vector<T>& vec) {
+    os<<"[";
+    char sep = ' ';
+    for(const T& obj : vec) {
+        os<<sep<<obj;
+        sep = ',';
+    }
+    os<<" ]";
+    return os;
+}
+
+std::ostream& operator<<(std::ostream& os, Date& date) {
+    time_t time1 = std::mktime(date.make_tm());
+    os << asctime(localtime(&time1));
+    return os;
+}
+
+
+
 template<typename T>
 T get_test_data(int index) {
     return T{index};
@@ -451,6 +593,11 @@ T get_test_data(int index) {
 template<>
 double get_test_data<double>(int index) {
     return index+0.1;
+}
+
+template<>
+Date get_test_data<Date>(int index) {
+    return Date{1970+index, index % 12 + 1,  index % 28 + 1, index % 24, index % 60, index % 60};
 }
 
 
@@ -492,98 +639,63 @@ void test_tree(Tree<T>* tree) {
     tree->print();  //виведення дерева
 }
 
-template<typename T>
-std::ostream& operator<<(std::ostream& os, const std::vector<T>& vec) {
-    os<<"[";
-    char sep = ' ';
-    for(const T& obj : vec) {
-        os<<sep<<obj;
-        sep = ',';
-    }
-    os<<" ]";
-    return os;
-}
-
-//-------------------------
-//-------------------------
-//-------------------------
-
-// PART 2
-
-//-------------------------
-//-------------------------
-//-------------------------
-
-
-class Date {
-    public:
-        int year;
-        int month;
-        int day;
-        int hours;
-        int minutes;
-        int seconds;
-    };
-
-
-
-bool operator<(const Date& date1, const Date& date2) { return true; }
-bool operator==(const Date& date1, const Date& date2) { return (date1 == date2); }
-
-// Make a tm structure representing this date
-std::tm make_tm(int year, int month, int day)
-{
-    std::tm tm = {0};
-    tm.tm_year = year - 1900; // years count from 1900
-    tm.tm_mon = month - 1;    // months count from January=0
-    tm.tm_mday = day;         // days count from 1
-    return tm;
-}
-
 //-------------------------
 int main() {
 
-
-
-// Structures representing the two dates
-    std::tm tm1 = make_tm(2012,4,2);    // April 2nd, 2012
-    std::tm tm2 = make_tm(2003,2,2);    // February 2nd, 2003
-
-// Arithmetic time values.
-// On a posix system, these are seconds since 1970-01-01 00:00:00 UTC
-    std::time_t time1 = std::mktime(&tm1);
-    std::time_t time2 = std::mktime(&tm2);
-
-// Divide by the number of seconds in a day
-    const int seconds_per_day = 60*60*24;
-    std::time_t difference = (time1 - time2);
-
-// To be fully portable, we shouldn't assume that these are Unix time;
-// instead, we should use "difftime" to give the difference in seconds:
-    double portable_difference = std::difftime(time1, time2) / seconds_per_day;
-
-    cout << portable_difference;
-    cout << difference;
-    struct tm *tminfo;
-
-    tminfo = localtime ( &difference );
-    printf ( "Current date and time are: %s", asctime (tminfo) );
-
-
+//    Date date1 = Date{2012,4,2, 10, 30, 30};
+//    Date date2 = Date{2003,20,2, 50, 28, 30};
 //
-//    using std::vector;
+//    date1.print();
+//    date2.print();
 //
-//    cout << endl << "Working with Variable Tree:" << endl;
-//    Tree<vector<int>>* tree1 = new VariableSonTree<vector<int>>({1,2});
-//    test_tree(tree1);
+//    Date date3 = date1 - date2;
+//    date3.print();
 //
-//    cout << endl << "Working with Binary Tree:" << endl;
-//    BinTree<double>* tree2 = new BinTree<double>(0.1);
-//    test_tree(tree2);
+//    Date date4 = date1 + date3;
+//    date4.simple_print();
+
+
+//// Structures representing the two dates
+//    tm tm1 = make_tm(2012,4,2, 10, 30, 30);    // April 2nd, 2012
+//    tm tm2 = make_tm(2003,2,2, 10, 28, 30);    // February 2nd, 2003
+//    tm tm3 = make_tm(2004,2,2, 10, 28, 30);
+//// Arithmetic time values.
+//// On a posix system, these are seconds since 1970-01-01 00:00:00 UTC
+//    time_t time1 = std::mktime(&tm1);
+//    time_t time2 = std::mktime(&tm2);
+//    time_t time3 = std::mktime(&tm2);
 //
-//    cout << endl << "Working with Search Tree:" << endl;
-//    Tree<int>* tree3 = new SearchTree<int>{1};
-//    test_tree(tree3);
+//// Divide by the number of seconds in a day
+//    const int seconds_per_day = 60*60*24;
+//    time_t difference = (time1 - time2);
+//    time_t sum = (time3 + difference);
+//
+//// To be fully portable, we shouldn't assume that these are Unix time;
+//// instead, we should use "difftime" to give the difference in seconds:
+//    cout << asctime(localtime(&sum));
+//
+////    cout << portable_difference;
+////    cout << difference;
+//    struct tm *tminfo;
+//
+//    tminfo = localtime ( &difference );
+//    cout << asctime(tminfo);
+
+
+
+    using std::vector;
+
+    cout << endl << "Working with Variable Tree:" << endl;
+    Tree<vector<int>>* tree1 = new VariableSonTree<vector<int>>({1,2});
+    test_tree(tree1);
+
+    cout << endl << "Working with Binary Tree:" << endl;
+    BinTree<double>* tree2 = new BinTree<double>(0.1);
+    test_tree(tree2);
+
+    cout << endl << "Working with Search Tree:" << endl;
+    Tree<Date>* tree3 = new SearchTree<Date>{1};
+    test_tree(tree3);
     return 0;
 }
 
