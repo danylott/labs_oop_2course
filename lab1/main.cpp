@@ -648,47 +648,6 @@ void test_tree(Tree<T>* tree) {
 //-------------------------
 int main() {
 
-//    Date date1 = Date{2012,4,2, 10, 30, 30};
-//    Date date2 = Date{2003,20,2, 50, 28, 30};
-//
-//    date1.print();
-//    date2.print();
-//
-//    Date date3 = date1 - date2;
-//    date3.print();
-//
-//    Date date4 = date1 + date3;
-//    date4.simple_print();
-
-
-//// Structures representing the two dates
-//    tm tm1 = make_tm(2012,4,2, 10, 30, 30);    // April 2nd, 2012
-//    tm tm2 = make_tm(2003,2,2, 10, 28, 30);    // February 2nd, 2003
-//    tm tm3 = make_tm(2004,2,2, 10, 28, 30);
-//// Arithmetic time values.
-//// On a posix system, these are seconds since 1970-01-01 00:00:00 UTC
-//    time_t time1 = std::mktime(&tm1);
-//    time_t time2 = std::mktime(&tm2);
-//    time_t time3 = std::mktime(&tm2);
-//
-//// Divide by the number of seconds in a day
-//    const int seconds_per_day = 60*60*24;
-//    time_t difference = (time1 - time2);
-//    time_t sum = (time3 + difference);
-//
-//// To be fully portable, we shouldn't assume that these are Unix time;
-//// instead, we should use "difftime" to give the difference in seconds:
-//    cout << asctime(localtime(&sum));
-//
-////    cout << portable_difference;
-////    cout << difference;
-//    struct tm *tminfo;
-//
-//    tminfo = localtime ( &difference );
-//    cout << asctime(tminfo);
-
-
-
     using std::vector;
 
     cout << endl << "Working with Variable Tree:" << endl;
