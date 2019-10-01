@@ -528,6 +528,12 @@ public:
         std::cout << asctime (localtime(&time1));
     }
 
+    string create_string() {
+        string s;
+        s = std::to_string(year) + "-" + std::to_string(month) + "-" + std::to_string(day) + " " + std::to_string(hours) + ":" + std::to_string(minutes) + ":" +  std::to_string(seconds);
+        return s;
+    }
+
 
     // Звичайний вивід
     void simple_print() {
@@ -579,7 +585,7 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& vec) {
 
 std::ostream& operator<<(std::ostream& os, Date& date) {
     time_t time1 = std::mktime(date.make_tm());
-    os << asctime(localtime(&time1));
+    os << date.create_string();
     return os;
 }
 
