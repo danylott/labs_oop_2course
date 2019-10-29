@@ -1,6 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
+#include <QListWidget>
+#include <QTime>
+#include <QLabel>
+#include <QVBoxLayout>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -23,3 +27,18 @@ void MainWindow::updateTime()
     ui->timer->setText(QTime::currentTime().toString());
 }
 
+void MainWindow::addTimerToList(int interval)
+{
+    QListWidgetItem * listItem = new QListWidgetItem(QIcon(":/rec/images/timer.png"),QString(interval));
+
+    ui->listTimers->addItem(listItem);
+
+
+}
+
+
+
+void MainWindow::on_btnAddTimer_clicked()
+{
+    addTimerToList(10000);
+}

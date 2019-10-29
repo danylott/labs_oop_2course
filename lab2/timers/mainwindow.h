@@ -17,8 +17,11 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void addTimerToList(int interval);
 private slots:
     void updateTime();
+
+    void on_btnAddTimer_clicked();
 
 private:
     Ui::MainWindow *ui;

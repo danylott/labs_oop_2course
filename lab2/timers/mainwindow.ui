@@ -14,13 +14,41 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <widget class="QListWidget" name="listTimers">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>79</y>
+      <width>781</width>
+      <height>301</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnAddTimer">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>39</y>
+      <width>771</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Add Timer</string>
+    </property>
+   </widget>
    <widget class="QLabel" name="timer">
     <property name="geometry">
      <rect>
-      <x>350</x>
-      <y>0</y>
-      <width>71</width>
-      <height>41</height>
+      <x>360</x>
+      <y>10</y>
+      <width>66</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
