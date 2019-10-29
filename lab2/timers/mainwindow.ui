@@ -17,15 +17,15 @@
    <widget class="QLabel" name="timer">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>10</y>
-      <width>411</width>
-      <height>211</height>
+      <x>350</x>
+      <y>0</y>
+      <width>71</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>60</pointsize>
+      <pointsize>10</pointsize>
      </font>
     </property>
     <property name="text">
