@@ -17,6 +17,16 @@ int Timer::getType() const
     return type;
 }
 
+std::string Timer::getTypeString() const
+{
+    string type_string;
+    if(type == 0)
+        type_string = "Timer";
+    else
+        type_string = "Alarm";
+    return type_string;
+}
+
 void Timer::setType(int value)
 {
     type = value;

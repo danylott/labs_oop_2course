@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
     QByteArrayData data[12];
-    char stringdata0[201];
+    char stringdata0[195];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,22 +34,22 @@ static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_MainWindow = {
 QT_MOC_LITERAL(0, 0, 10), // "MainWindow"
 QT_MOC_LITERAL(1, 11, 17), // "on_btnAdd_clicked"
 QT_MOC_LITERAL(2, 29, 0), // ""
-QT_MOC_LITERAL(3, 30, 32), // "on_lstStudents_currentRowChanged"
-QT_MOC_LITERAL(4, 63, 10), // "currentRow"
-QT_MOC_LITERAL(5, 74, 18), // "on_btnEdit_clicked"
-QT_MOC_LITERAL(6, 93, 22), // "on_lstStudents_clicked"
-QT_MOC_LITERAL(7, 116, 11), // "QModelIndex"
-QT_MOC_LITERAL(8, 128, 5), // "index"
-QT_MOC_LITERAL(9, 134, 32), // "on_lstStudents_currentRowRemoved"
-QT_MOC_LITERAL(10, 167, 25), // "on_deleteAction_triggered"
-QT_MOC_LITERAL(11, 193, 7) // "checked"
+QT_MOC_LITERAL(3, 30, 30), // "on_lstTimers_currentRowChanged"
+QT_MOC_LITERAL(4, 61, 10), // "currentRow"
+QT_MOC_LITERAL(5, 72, 18), // "on_btnEdit_clicked"
+QT_MOC_LITERAL(6, 91, 20), // "on_lstTimers_clicked"
+QT_MOC_LITERAL(7, 112, 11), // "QModelIndex"
+QT_MOC_LITERAL(8, 124, 5), // "index"
+QT_MOC_LITERAL(9, 130, 30), // "on_lstTimers_currentRowRemoved"
+QT_MOC_LITERAL(10, 161, 25), // "on_deleteAction_triggered"
+QT_MOC_LITERAL(11, 187, 7) // "checked"
 
     },
     "MainWindow\0on_btnAdd_clicked\0\0"
-    "on_lstStudents_currentRowChanged\0"
+    "on_lstTimers_currentRowChanged\0"
     "currentRow\0on_btnEdit_clicked\0"
-    "on_lstStudents_clicked\0QModelIndex\0"
-    "index\0on_lstStudents_currentRowRemoved\0"
+    "on_lstTimers_clicked\0QModelIndex\0index\0"
+    "on_lstTimers_currentRowRemoved\0"
     "on_deleteAction_triggered\0checked"
 };
 #undef QT_MOC_LITERAL
@@ -93,10 +93,10 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->on_btnAdd_clicked(); break;
-        case 1: _t->on_lstStudents_currentRowChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 1: _t->on_lstTimers_currentRowChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 2: _t->on_btnEdit_clicked(); break;
-        case 3: _t->on_lstStudents_clicked((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
-        case 4: _t->on_lstStudents_currentRowRemoved(); break;
+        case 3: _t->on_lstTimers_clicked((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
+        case 4: _t->on_lstTimers_currentRowRemoved(); break;
         case 5: _t->on_deleteAction_triggered((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }

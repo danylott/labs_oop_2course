@@ -26,21 +26,23 @@ protected:
 private slots:
     void on_btnAdd_clicked();
 
-    void on_lstStudents_currentRowChanged(int currentRow);
+    void on_lstTimers_currentRowChanged(int currentRow);
 
     void on_btnEdit_clicked();
 
-    void on_lstStudents_clicked(const QModelIndex &index);
+    void on_lstTimers_clicked(const QModelIndex &index);
 
-    void on_lstStudents_currentRowRemoved();
+    void on_lstTimers_currentRowRemoved();
     void on_deleteAction_triggered(bool checked);
 
 private:
     Ui::MainWindow *ui;
-    std::vector<Student> students;
+    std::vector<Timer> Timers;
     void initActions();
+    Timer createTimer();
+    QString displayTimer(Timer Timer);
 
-    void clearCurrentStudent();
+    void clearCurrentTimer();
 };
 
 #endif // MAINWINDOW_H

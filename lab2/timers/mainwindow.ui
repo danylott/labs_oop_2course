@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="CustomListWidget" name="lstStudents">
+   <widget class="CustomListWidget" name="lstTimers">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -111,7 +111,15 @@
        </widget>
       </item>
       <item>
-       <widget class="QTimeEdit" name="timeEdit"/>
+       <widget class="QTimeEdit" name="timeEdit">
+        <property name="minimumTime">
+         <time>
+          <hour>0</hour>
+          <minute>0</minute>
+          <second>10</second>
+         </time>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

@@ -32,7 +32,7 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    CustomListWidget *lstStudents;
+    CustomListWidget *lstTimers;
     QGroupBox *grbStudentDetails;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout_2;
@@ -61,11 +61,11 @@ public:
         MainWindow->resize(831, 538);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        lstStudents = new CustomListWidget(centralWidget);
-        lstStudents->setObjectName(QString::fromUtf8("lstStudents"));
-        lstStudents->setGeometry(QRect(10, 10, 256, 471));
-        lstStudents->setContextMenuPolicy(Qt::ActionsContextMenu);
-        lstStudents->setSelectionMode(QAbstractItemView::NoSelection);
+        lstTimers = new CustomListWidget(centralWidget);
+        lstTimers->setObjectName(QString::fromUtf8("lstTimers"));
+        lstTimers->setGeometry(QRect(10, 10, 256, 471));
+        lstTimers->setContextMenuPolicy(Qt::ActionsContextMenu);
+        lstTimers->setSelectionMode(QAbstractItemView::NoSelection);
         grbStudentDetails = new QGroupBox(centralWidget);
         grbStudentDetails->setObjectName(QString::fromUtf8("grbStudentDetails"));
         grbStudentDetails->setGeometry(QRect(340, 30, 351, 431));
@@ -109,6 +109,7 @@ public:
 
         timeEdit = new QTimeEdit(layoutWidget1);
         timeEdit->setObjectName(QString::fromUtf8("timeEdit"));
+        timeEdit->setMinimumTime(QTime(0, 0, 10));
 
         horizontalLayout->addWidget(timeEdit);
 

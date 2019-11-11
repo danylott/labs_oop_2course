@@ -17,6 +17,7 @@ public:
     string getName() const;
     void setName(const string &value);
     int getType() const;
+    string getTypeString() const;
     void setType(int value);
     QTime getTime() const;
     void setTime(QTime t);
