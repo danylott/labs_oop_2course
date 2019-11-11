@@ -29,7 +29,8 @@ void MainWindow::updateTime()
 
 void MainWindow::addTimerToList(int interval)
 {
-    QListWidgetItem * listItem = new QListWidgetItem(QIcon(":/rec/images/timer.png"),QString(interval));
+    QListWidgetItem * listItem = new QListWidgetItem(QIcon(":/res/images/timer.png"),QString(interval));
+    listItem->setSizeHint( QSize(200, 400) );
 
     ui->listTimers->addItem(listItem);
 
@@ -40,5 +41,5 @@ void MainWindow::addTimerToList(int interval)
 
 void MainWindow::on_btnAddTimer_clicked()
 {
-    addTimerToList(10000);
+    addTimerToList(10);
 }
