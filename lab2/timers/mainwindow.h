@@ -1,30 +1,46 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include <QTimer>
-#include <QTime>
+#include "timer.h"
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
+#include <QMainWindow>
+
+#include <vector>
+
+namespace Ui {
+class MainWindow;
+}
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void addTimerToList(int interval);
-private slots:
-    void updateTime();
 
-    void on_btnAddTimer_clicked();
+protected:
+    void mousePressEvent(QMouseEvent *event) override;
+
+private slots:
+    void on_btnAdd_clicked();
+
+    void on_lstStudents_currentRowChanged(int currentRow);
+
+    void on_btnEdit_clicked();
+
+    void on_lstStudents_clicked(const QModelIndex &index);
+
+    void on_lstStudents_currentRowRemoved();
+    void on_deleteAction_triggered(bool checked);
 
 private:
     Ui::MainWindow *ui;
-    QTimer *tmr;
+    std::vector<Student> students;
+    void initActions();
+
+    void clearCurrentStudent();
 };
+
 #endif // MAINWINDOW_H
