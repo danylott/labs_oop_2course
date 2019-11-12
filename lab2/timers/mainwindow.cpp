@@ -5,12 +5,19 @@
 #include <QMouseEvent>
 #include <QDebug>
 #include <QAction>
+#include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    tmr = new QTimer();
+    tmr->setInterval(1000);
+    connect(tmr, SIGNAL(timeout()), this, SLOT(updateTime()));
+    tmr->start();
+
     initActions();
 }
 
@@ -22,7 +29,7 @@ MainWindow::~MainWindow()
 void MainWindow::clearCurrentTimer()
 {
     ui->lstTimers->setCurrentRow(-1);
-    ui->timeEdit->clear();
+    ui->timeEdit->setTime(QTime::currentTime());
     ui->leName->clear();
     ui->rbTimer->setChecked(true);
 }
@@ -47,7 +54,7 @@ void MainWindow::on_btnAdd_clicked()
 
     Timers.push_back(Timer);
 
-    QString display_name = displayTimer(Timer);
+    QString display_name = Timer.display();
     ui->lstTimers->addItem(display_name);
 
 }
@@ -72,7 +79,7 @@ void MainWindow::on_btnEdit_clicked()
     Timer& Timer = Timers[currentRow];
 
     Timer = createTimer();
-    QString display_name = displayTimer(Timer);
+    QString display_name = Timer.display();
 
     ui->lstTimers->currentItem()->setText(display_name);
 
@@ -101,6 +108,13 @@ void MainWindow::on_deleteAction_triggered(bool checked)
     Timers.erase(Timers.begin()+currentRow);
 }
 
+void MainWindow::updateTime()
+{
+    for(auto Timer:Timers) {
+        Timer.display();
+    }
+}
+
 
 void MainWindow::initActions()
 {
@@ -123,8 +137,3 @@ Timer MainWindow::createTimer()
     return Timer;
 }
 
-QString MainWindow::displayTimer(Timer Timer)
-{
-    QString display_name = QString("%1: time: %2 %3").arg(Timer.getName().c_str()).arg(Timer.getTime().toString()).arg(Timer.getTypeString().c_str());
-    return display_name;
-}

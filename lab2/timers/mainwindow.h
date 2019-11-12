@@ -35,12 +35,15 @@ private slots:
     void on_lstTimers_currentRowRemoved();
     void on_deleteAction_triggered(bool checked);
 
+    void updateTime();
+
 private:
     Ui::MainWindow *ui;
+    QTimer *tmr;
+
     std::vector<Timer> Timers;
     void initActions();
     Timer createTimer();
-    QString displayTimer(Timer Timer);
 
     void clearCurrentTimer();
 };

@@ -2,6 +2,7 @@
 #define TIMER_H
 
 #include <string>
+#include <QString>
 #include <QTime>
 using std::string;
 
@@ -21,6 +22,7 @@ public:
     void setType(int value);
     QTime getTime() const;
     void setTime(QTime t);
+    QString display();
 };
 
 #endif // TIMER_H

@@ -42,6 +42,12 @@ void Timer::setTime(QTime t)
     time = t;
 }
 
+QString Timer::display()
+{
+    QString display_name = QString("%1: time: %2 %3").arg(this->getName().c_str()).arg(this->getTime().toString()).arg(this->getTypeString().c_str());
+    return display_name;
+}
+
 
 
 Timer::Timer()

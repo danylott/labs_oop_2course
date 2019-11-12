@@ -71,7 +71,7 @@ public:
         grbStudentDetails->setGeometry(QRect(340, 30, 351, 431));
         layoutWidget = new QWidget(grbStudentDetails);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 70, 221, 27));
+        layoutWidget->setGeometry(QRect(10, 30, 221, 27));
         horizontalLayout_2 = new QHBoxLayout(layoutWidget);
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
@@ -96,7 +96,7 @@ public:
         btnEdit->setGeometry(QRect(130, 200, 93, 28));
         layoutWidget1 = new QWidget(grbStudentDetails);
         layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(10, 30, 221, 27));
+        layoutWidget1->setGeometry(QRect(10, 70, 221, 27));
         horizontalLayout = new QHBoxLayout(layoutWidget1);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
@@ -109,7 +109,9 @@ public:
 
         timeEdit = new QTimeEdit(layoutWidget1);
         timeEdit->setObjectName(QString::fromUtf8("timeEdit"));
-        timeEdit->setMinimumTime(QTime(0, 0, 10));
+        timeEdit->setMinimumDateTime(QDateTime(QDate(2000, 1, 1), QTime(0, 0, 15)));
+        timeEdit->setMinimumTime(QTime(0, 0, 15));
+        timeEdit->setTime(QTime(0, 0, 15));
 
         horizontalLayout->addWidget(timeEdit);
 
@@ -164,6 +166,7 @@ public:
         btnAdd->setText(QApplication::translate("MainWindow", "Add", nullptr));
         btnEdit->setText(QApplication::translate("MainWindow", "Edit", nullptr));
         lblTime->setText(QApplication::translate("MainWindow", "Time:", nullptr));
+        timeEdit->setDisplayFormat(QApplication::translate("MainWindow", "H:mm:ss", nullptr));
         btnDelete->setText(QApplication::translate("MainWindow", "Delete", nullptr));
         lblType->setText(QApplication::translate("MainWindow", "Type:", nullptr));
         rbTimer->setText(QApplication::translate("MainWindow", "Timer", nullptr));
