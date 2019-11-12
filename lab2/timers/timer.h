@@ -29,6 +29,7 @@ public:
     bool getActive() const;
     void setActive(int value);
     bool changeRemainingTime(); // return true if timer is finish working
+    QTime calculateRemainingTime();
     QString display();
 };
 

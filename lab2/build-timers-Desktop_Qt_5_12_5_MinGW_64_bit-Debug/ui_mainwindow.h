@@ -66,6 +66,9 @@ public:
         lstTimers = new CustomListWidget(centralWidget);
         lstTimers->setObjectName(QString::fromUtf8("lstTimers"));
         lstTimers->setGeometry(QRect(10, 10, 421, 471));
+        QFont font;
+        font.setPointSize(12);
+        lstTimers->setFont(font);
         lstTimers->setContextMenuPolicy(Qt::ActionsContextMenu);
         lstTimers->setSelectionMode(QAbstractItemView::NoSelection);
         grbStudentDetails = new QGroupBox(centralWidget);
@@ -111,9 +114,10 @@ public:
 
         timeEdit = new QTimeEdit(layoutWidget1);
         timeEdit->setObjectName(QString::fromUtf8("timeEdit"));
-        timeEdit->setMinimumDateTime(QDateTime(QDate(2000, 1, 1), QTime(0, 0, 15)));
-        timeEdit->setMinimumTime(QTime(0, 0, 15));
-        timeEdit->setTime(QTime(0, 0, 15));
+        timeEdit->setDateTime(QDateTime(QDate(2000, 1, 1), QTime(0, 0, 5)));
+        timeEdit->setMinimumDateTime(QDateTime(QDate(2000, 1, 1), QTime(0, 0, 5)));
+        timeEdit->setMinimumTime(QTime(0, 0, 5));
+        timeEdit->setTime(QTime(0, 0, 5));
 
         horizontalLayout->addWidget(timeEdit);
 

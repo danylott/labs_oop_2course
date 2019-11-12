@@ -23,6 +23,11 @@
       <height>471</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
     <property name="contextMenuPolicy">
      <enum>Qt::ActionsContextMenu</enum>
     </property>
@@ -112,11 +117,21 @@
       </item>
       <item>
        <widget class="QTimeEdit" name="timeEdit">
+        <property name="dateTime">
+         <datetime>
+          <hour>0</hour>
+          <minute>0</minute>
+          <second>5</second>
+          <year>2000</year>
+          <month>1</month>
+          <day>1</day>
+         </datetime>
+        </property>
         <property name="minimumDateTime">
          <datetime>
           <hour>0</hour>
           <minute>0</minute>
-          <second>15</second>
+          <second>5</second>
           <year>2000</year>
           <month>1</month>
           <day>1</day>
@@ -126,7 +141,7 @@
          <time>
           <hour>0</hour>
           <minute>0</minute>
-          <second>15</second>
+          <second>5</second>
          </time>
         </property>
         <property name="displayFormat">
@@ -136,7 +151,7 @@
          <time>
           <hour>0</hour>
           <minute>0</minute>
-          <second>15</second>
+          <second>5</second>
          </time>
         </property>
        </widget>

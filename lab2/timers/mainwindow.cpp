@@ -113,8 +113,8 @@ void MainWindow::updateTime()
         Timer* Timer = Timers[i];
         if(Timer->getActive()) {
             if(Timer->changeRemainingTime()) {
-               timerAlarm(Timer);
                Timer->setActive(false);
+               timerAlarm(Timer); // can restart timer
             }
         }
         ui->lstTimers->item(i)->setText(Timer->display());
@@ -147,22 +147,7 @@ Timer* MainWindow::changeTimer(Timer* Timer)
     QTime time = ui->timeEdit->time();
     Timer->setTime(time);
 
-    if(Timer->getType() == 0) { // Timer
-        Timer->setRemainingTime(Timer->getTime());
-    }
-    else { // Alarm
-        int second_in_day = 60*60*24;
-        QTime rem_time;
-        int second_to_next_day_time = QTime::currentTime().secsTo(time);
-        if(second_to_next_day_time < 0)
-            second_to_next_day_time += second_in_day;
-        int hour = second_to_next_day_time / (60*60);
-        int min = (second_to_next_day_time / 60) % 60;
-        int sec = second_to_next_day_time % 60;
-        rem_time.setHMS(hour, min, sec);
-        qDebug()<< rem_time << hour << min << sec;
-        Timer->setRemainingTime(rem_time);
-    }
+    Timer->setRemainingTime(Timer->calculateRemainingTime());
     return Timer;
 }
 
@@ -191,13 +176,14 @@ void MainWindow::timerAlarm(Timer *Timer)
 
     switch (ret) {
       case QMessageBox::Ok:
-          // Save was clicked
           break;
       case QMessageBox::Retry:
-          // Don't Save was clicked
+          Timer->setRemainingTime(Timer->calculateRemainingTime());
+          Timer->setActive(true);
+          player->stop();
           break;
       case QMessageBox::Close:
-          // Cancel was clicked
+          player->stop();
           break;
       default:
           break;
