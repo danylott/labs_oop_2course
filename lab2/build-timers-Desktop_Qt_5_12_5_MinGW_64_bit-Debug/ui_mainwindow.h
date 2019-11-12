@@ -50,6 +50,8 @@ public:
     QLabel *lblType;
     QRadioButton *rbTimer;
     QRadioButton *rbAlarm;
+    QPushButton *btnStart;
+    QPushButton *btnStop;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -141,6 +143,14 @@ public:
 
         verticalLayout->addWidget(rbAlarm);
 
+        btnStart = new QPushButton(grbStudentDetails);
+        btnStart->setObjectName(QString::fromUtf8("btnStart"));
+        btnStart->setGeometry(QRect(30, 250, 111, 41));
+        btnStart->setCheckable(false);
+        btnStop = new QPushButton(grbStudentDetails);
+        btnStop->setObjectName(QString::fromUtf8("btnStop"));
+        btnStop->setGeometry(QRect(200, 250, 111, 41));
+        btnStop->setCheckable(false);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -171,6 +181,8 @@ public:
         lblType->setText(QApplication::translate("MainWindow", "Type:", nullptr));
         rbTimer->setText(QApplication::translate("MainWindow", "Timer", nullptr));
         rbAlarm->setText(QApplication::translate("MainWindow", "Alarm", nullptr));
+        btnStart->setText(QApplication::translate("MainWindow", "Start", nullptr));
+        btnStop->setText(QApplication::translate("MainWindow", "Stop", nullptr));
     } // retranslateUi
 
 };

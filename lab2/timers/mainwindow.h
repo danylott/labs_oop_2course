@@ -37,13 +37,16 @@ private slots:
 
     void updateTime();
 
+    void on_btnStart_clicked();
+
 private:
     Ui::MainWindow *ui;
     QTimer *tmr;
 
-    std::vector<Timer> Timers;
+    std::vector<Timer*> Timers;
     void initActions();
-    Timer createTimer();
+    Timer* createTimer();
+    Timer* changeTimer(Timer* Timer);
 
     void clearCurrentTimer();
 };

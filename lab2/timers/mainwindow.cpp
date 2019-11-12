@@ -49,12 +49,11 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 void MainWindow::on_btnAdd_clicked()
 {
     qDebug()<<"Add clicked!";
-
-    Timer Timer = createTimer();
+    Timer* Timer = createTimer();
 
     Timers.push_back(Timer);
 
-    QString display_name = Timer.display();
+    QString display_name = Timer->display();
     ui->lstTimers->addItem(display_name);
 
 }
@@ -65,21 +64,20 @@ void MainWindow::on_lstTimers_currentRowChanged(int currentRow)
         qDebug()<<"No selected item";
         return;
     }
-    Timer Timer = Timers[currentRow];
-    ui->leName->setText(Timer.getName().c_str());
-    ui->timeEdit->setTime(Timer.getTime());
-    ui->rbAlarm->setChecked(Timer.getType());
-    ui->rbTimer->setChecked((Timer.getType() + 1) % 2);
+    Timer* Timer = Timers[currentRow];
+    ui->leName->setText(Timer->getName().c_str());
+    ui->timeEdit->setTime(Timer->getTime());
+    ui->rbAlarm->setChecked(Timer->getType());
+    ui->rbTimer->setChecked((Timer->getType() + 1) % 2);
 }
 
 void MainWindow::on_btnEdit_clicked()
 {
     int currentRow = ui->lstTimers->currentRow();
     if (currentRow == -1) { return;}
-    Timer& Timer = Timers[currentRow];
-
-    Timer = createTimer();
-    QString display_name = Timer.display();
+    Timer* Timer = Timers[currentRow];
+    Timer = changeTimer(Timer);
+    QString display_name = Timer->display();
 
     ui->lstTimers->currentItem()->setText(display_name);
 
@@ -105,13 +103,17 @@ void MainWindow::on_deleteAction_triggered(bool checked)
     }
     ui->lstTimers->takeItem(currentRow);
     clearCurrentTimer();
+    delete Timers[currentRow];
     Timers.erase(Timers.begin()+currentRow);
 }
 
 void MainWindow::updateTime()
 {
     for(auto Timer:Timers) {
-        Timer.display();
+        if(Timer->getActive()) {
+            Timer->changeTime();
+        }
+        Timer->display();
     }
 }
 
@@ -125,15 +127,33 @@ void MainWindow::initActions()
     ui->lstTimers->addAction(deleteAction);
 }
 
-Timer MainWindow::createTimer()
+Timer* MainWindow::createTimer()
 {
-    Timer Timer;
-    string name = ui->leName->text().toUtf8().constData();
-    Timer.setName(name);
-    int type = ui->rbAlarm->isChecked(); // 1 if Alarm, 0 if Timer
-    Timer.setType(type);
-    QTime time = ui->timeEdit->time();
-    Timer.setTime(time);
+    Timer* Timer = new class Timer;
+    Timer = changeTimer(Timer);
     return Timer;
 }
 
+Timer* MainWindow::changeTimer(Timer* Timer)
+{
+    string name = ui->leName->text().toUtf8().constData();
+    Timer->setName(name);
+    int type = ui->rbAlarm->isChecked(); // 1 if Alarm, 0 if Timer
+    Timer->setType(type);
+    QTime time = ui->timeEdit->time();
+    Timer->setTime(time);
+    return Timer;
+}
+
+
+void MainWindow::on_btnStart_clicked()
+{
+    int currentRow = ui->lstTimers->currentRow();
+    if (currentRow == -1) { return;}
+    Timer* Timer = Timers[currentRow];
+    Timer->setActive(true);
+    QString display_name = Timer->display();
+
+    ui->lstTimers->currentItem()->setText(display_name);
+
+}

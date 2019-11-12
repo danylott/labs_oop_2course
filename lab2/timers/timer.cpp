@@ -1,6 +1,7 @@
 #include "timer.h"
 
 #include <stdexcept>
+#include <QDebug>
 
 string Timer::getName() const
 {
@@ -42,6 +43,42 @@ void Timer::setTime(QTime t)
     time = t;
 }
 
+bool Timer::getActive() const
+{
+    return is_active;
+}
+
+void Timer::setActive(int value)
+{
+    is_active = value;
+}
+
+bool Timer::changeTime()
+{
+    int hour = time.hour();
+    int min = time.minute();
+    int sec = time.second();
+    if(hour == 0 && min == 0 && sec == 0)
+        return true;
+    if(min == 0 && sec == 0) {
+        sec = 59;
+        min = 59;
+        hour--;
+    }
+    else if (sec == 0) {
+        sec = 59;
+        min--;
+    }
+    else {
+        sec--;
+    }
+    time.setHMS(hour, min, sec);
+    this->setTime(time);
+    qDebug() << time.toString();
+
+    return false;
+}
+
 QString Timer::display()
 {
     QString display_name = QString("%1: time: %2 %3").arg(this->getName().c_str()).arg(this->getTime().toString()).arg(this->getTypeString().c_str());
@@ -52,5 +89,5 @@ QString Timer::display()
 
 Timer::Timer()
 {
-
+    is_active = false;
 }

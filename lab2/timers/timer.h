@@ -12,6 +12,7 @@ private:
     string name;
     QTime time;
     int type;
+    bool is_active;
 public:
     Timer();
 
@@ -22,6 +23,9 @@ public:
     void setType(int value);
     QTime getTime() const;
     void setTime(QTime t);
+    bool getActive() const;
+    void setActive(int value);
+    bool changeTime(); // return true if timer is finish working
     QString display();
 };
 
