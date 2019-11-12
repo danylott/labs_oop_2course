@@ -7,6 +7,8 @@
 #include <QAction>
 #include <QTimer>
 #include <QMessageBox>
+#include <QSound>
+#include <QMediaPlayer>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -37,7 +39,6 @@ void MainWindow::clearCurrentTimer()
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
-    //qDebug()<<event->isAccepted();
     int currentRow = ui->lstTimers->currentRow();
     qDebug()<< currentRow;
     if (currentRow != -1) {
@@ -111,15 +112,9 @@ void MainWindow::updateTime()
     for(int i = 0; i < Timers.size(); i++) {
         Timer* Timer = Timers[i];
         if(Timer->getActive()) {
-            if(Timer->changeTime()) {
-                QMessageBox msgBoxAlarm;
-                msgBoxAlarm.setText("ALARM!!!!");
-                msgBoxAlarm.setIcon(QMessageBox::Critical);
-                msgBoxAlarm.setInformativeText("What you want to do?");
-                msgBoxAlarm.setStandardButtons(QMessageBox::Ok | QMessageBox::Retry | QMessageBox::Close);
-                msgBoxAlarm.setDefaultButton(QMessageBox::Ok);
-                int ret = msgBoxAlarm.exec();
-                Timer->setActive(false);
+            if(Timer->changeRemainingTime()) {
+               timerAlarm(Timer);
+               Timer->setActive(false);
             }
         }
         ui->lstTimers->item(i)->setText(Timer->display());
@@ -151,6 +146,23 @@ Timer* MainWindow::changeTimer(Timer* Timer)
     Timer->setType(type);
     QTime time = ui->timeEdit->time();
     Timer->setTime(time);
+
+    if(Timer->getType() == 0) { // Timer
+        Timer->setRemainingTime(Timer->getTime());
+    }
+    else { // Alarm
+        int second_in_day = 60*60*24;
+        QTime rem_time;
+        int second_to_next_day_time = QTime::currentTime().secsTo(time);
+        if(second_to_next_day_time < 0)
+            second_to_next_day_time += second_in_day;
+        int hour = second_to_next_day_time / (60*60);
+        int min = (second_to_next_day_time / 60) % 60;
+        int sec = second_to_next_day_time % 60;
+        rem_time.setHMS(hour, min, sec);
+        qDebug()<< rem_time << hour << min << sec;
+        Timer->setRemainingTime(rem_time);
+    }
     return Timer;
 }
 
@@ -162,6 +174,36 @@ Timer *MainWindow::getCurrentTimer()
     return Timer;
 }
 
+void MainWindow::timerAlarm(Timer *Timer)
+{
+    auto player = new QMediaPlayer;
+
+    player->setMedia(QUrl("http://download-sounds.ru/wp-content/uploads2/2012/05/23.mp3"));
+    player->setVolume(50);
+    player->play();
+    QMessageBox msgBoxAlarm;
+    msgBoxAlarm.setText(Timer->getName().c_str() + QString("ALARM!!!"));
+    msgBoxAlarm.setIcon(QMessageBox::Critical);
+    msgBoxAlarm.setInformativeText("What you want to do?");
+    msgBoxAlarm.setStandardButtons(QMessageBox::Ok | QMessageBox::Retry | QMessageBox::Close);
+    msgBoxAlarm.setDefaultButton(QMessageBox::Ok);
+    int ret = msgBoxAlarm.exec();
+
+    switch (ret) {
+      case QMessageBox::Ok:
+          // Save was clicked
+          break;
+      case QMessageBox::Retry:
+          // Don't Save was clicked
+          break;
+      case QMessageBox::Close:
+          // Cancel was clicked
+          break;
+      default:
+          break;
+    }
+}
+
 
 void MainWindow::on_btnStart_clicked()
 {
@@ -169,7 +211,6 @@ void MainWindow::on_btnStart_clicked()
     if(!Timer)
         return;
     Timer->setActive(true);
-
     ui->lstTimers->currentItem()->setText(Timer->display());
 
 }

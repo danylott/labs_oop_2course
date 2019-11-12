@@ -10,7 +10,8 @@ using std::string;
 class Timer {
 private:
     string name;
-    QTime time;
+    QTime time; // for Timer remaining_time = time (at first) // for Alarm remaining_time = sec_to(time)
+    QTime remaining_time;
     int type;
     bool is_active;
 public:
@@ -23,9 +24,11 @@ public:
     void setType(int value);
     QTime getTime() const;
     void setTime(QTime t);
+    QTime getRemainingTime() const;
+    void setRemainingTime(QTime t);
     bool getActive() const;
     void setActive(int value);
-    bool changeTime(); // return true if timer is finish working
+    bool changeRemainingTime(); // return true if timer is finish working
     QString display();
 };
 

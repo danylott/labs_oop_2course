@@ -249,7 +249,9 @@ Makefile: ../timers/timers.pro ../../../../Qt/5.12.5/mingw73_64/mkspecs/win32-g+
 		../../../../Qt/5.12.5/mingw73_64/mkspecs/features/lex.prf \
 		../timers/timers.pro \
 		../../../../Qt/5.12.5/mingw73_64/lib/Qt5Widgets.prl \
+		../../../../Qt/5.12.5/mingw73_64/lib/Qt5Multimedia.prl \
 		../../../../Qt/5.12.5/mingw73_64/lib/Qt5Gui.prl \
+		../../../../Qt/5.12.5/mingw73_64/lib/Qt5Network.prl \
 		../../../../Qt/5.12.5/mingw73_64/lib/Qt5Core.prl \
 		../../../../Qt/5.12.5/mingw73_64/lib/qtmain.prl
 	$(QMAKE) -o Makefile ..\timers\timers.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -439,7 +441,9 @@ Makefile: ../timers/timers.pro ../../../../Qt/5.12.5/mingw73_64/mkspecs/win32-g+
 ../../../../Qt/5.12.5/mingw73_64/mkspecs/features/lex.prf:
 ../timers/timers.pro:
 ../../../../Qt/5.12.5/mingw73_64/lib/Qt5Widgets.prl:
+../../../../Qt/5.12.5/mingw73_64/lib/Qt5Multimedia.prl:
 ../../../../Qt/5.12.5/mingw73_64/lib/Qt5Gui.prl:
+../../../../Qt/5.12.5/mingw73_64/lib/Qt5Network.prl:
 ../../../../Qt/5.12.5/mingw73_64/lib/Qt5Core.prl:
 ../../../../Qt/5.12.5/mingw73_64/lib/qtmain.prl:
 qmake: FORCE

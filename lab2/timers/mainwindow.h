@@ -50,6 +50,7 @@ private:
     Timer* createTimer();
     Timer* changeTimer(Timer* Timer);
     Timer* getCurrentTimer();
+    void timerAlarm(Timer* Timer);
 
     void clearCurrentTimer();
 };

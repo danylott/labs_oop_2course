@@ -43,6 +43,16 @@ void Timer::setTime(QTime t)
     time = t;
 }
 
+QTime Timer::getRemainingTime() const
+{
+    return remaining_time;
+}
+
+void Timer::setRemainingTime(QTime t)
+{
+    remaining_time = t;
+}
+
 bool Timer::getActive() const
 {
     return is_active;
@@ -53,11 +63,11 @@ void Timer::setActive(int value)
     is_active = value;
 }
 
-bool Timer::changeTime()
+bool Timer::changeRemainingTime()
 {
-    int hour = time.hour();
-    int min = time.minute();
-    int sec = time.second();
+    int hour = remaining_time.hour();
+    int min = remaining_time.minute();
+    int sec = remaining_time.second();
     if(hour == 0 && min == 0 && sec == 0)
         return true;
     if(min == 0 && sec == 0) {
@@ -72,16 +82,15 @@ bool Timer::changeTime()
     else {
         sec--;
     }
-    time.setHMS(hour, min, sec);
-    this->setTime(time);
-    qDebug() << time.toString();
+    remaining_time.setHMS(hour, min, sec);
+    qDebug() << remaining_time.toString();
 
     return false;
 }
 
 QString Timer::display()
 {
-    QString display_name = QString("%1: time: %2 %3").arg(this->getName().c_str()).arg(this->getTime().toString()).arg(this->getTypeString().c_str());
+    QString display_name = QString("%1: time: %2 %3 active: %4 \n remaining time: %5").arg(this->getName().c_str()).arg(this->getTime().toString()).arg(this->getTypeString().c_str()).arg(this->getActive()).arg(this->getRemainingTime().toString());
     return display_name;
 }
 

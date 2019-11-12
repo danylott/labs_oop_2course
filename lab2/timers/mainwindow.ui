@@ -19,7 +19,7 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>256</width>
+      <width>421</width>
       <height>471</height>
      </rect>
     </property>
@@ -33,8 +33,8 @@
    <widget class="QGroupBox" name="grbStudentDetails">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>30</y>
+      <x>470</x>
+      <y>20</y>
       <width>351</width>
       <height>431</height>
      </rect>

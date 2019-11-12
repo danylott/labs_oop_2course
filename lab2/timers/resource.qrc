@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/res">
         <file>images/timer.png</file>
+        <file>sound/petyx.mp3</file>
     </qresource>
 </RCC>

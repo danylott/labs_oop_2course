@@ -65,12 +65,12 @@ public:
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         lstTimers = new CustomListWidget(centralWidget);
         lstTimers->setObjectName(QString::fromUtf8("lstTimers"));
-        lstTimers->setGeometry(QRect(10, 10, 256, 471));
+        lstTimers->setGeometry(QRect(10, 10, 421, 471));
         lstTimers->setContextMenuPolicy(Qt::ActionsContextMenu);
         lstTimers->setSelectionMode(QAbstractItemView::NoSelection);
         grbStudentDetails = new QGroupBox(centralWidget);
         grbStudentDetails->setObjectName(QString::fromUtf8("grbStudentDetails"));
-        grbStudentDetails->setGeometry(QRect(340, 30, 351, 431));
+        grbStudentDetails->setGeometry(QRect(470, 20, 351, 431));
         layoutWidget = new QWidget(grbStudentDetails);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
         layoutWidget->setGeometry(QRect(10, 30, 221, 27));
