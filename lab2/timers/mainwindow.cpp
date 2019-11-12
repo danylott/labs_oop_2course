@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QAction>
 #include <QTimer>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -53,8 +54,7 @@ void MainWindow::on_btnAdd_clicked()
 
     Timers.push_back(Timer);
 
-    QString display_name = Timer->display();
-    ui->lstTimers->addItem(display_name);
+    ui->lstTimers->addItem(Timer->display());
 
 }
 
@@ -73,13 +73,12 @@ void MainWindow::on_lstTimers_currentRowChanged(int currentRow)
 
 void MainWindow::on_btnEdit_clicked()
 {
-    int currentRow = ui->lstTimers->currentRow();
-    if (currentRow == -1) { return;}
-    Timer* Timer = Timers[currentRow];
+    Timer* Timer = getCurrentTimer();
+    if(!Timer)
+        return;
     Timer = changeTimer(Timer);
-    QString display_name = Timer->display();
 
-    ui->lstTimers->currentItem()->setText(display_name);
+    ui->lstTimers->currentItem()->setText(Timer->display());
 
 }
 
@@ -109,11 +108,21 @@ void MainWindow::on_deleteAction_triggered(bool checked)
 
 void MainWindow::updateTime()
 {
-    for(auto Timer:Timers) {
+    for(int i = 0; i < Timers.size(); i++) {
+        Timer* Timer = Timers[i];
         if(Timer->getActive()) {
-            Timer->changeTime();
+            if(Timer->changeTime()) {
+                QMessageBox msgBoxAlarm;
+                msgBoxAlarm.setText("ALARM!!!!");
+                msgBoxAlarm.setIcon(QMessageBox::Critical);
+                msgBoxAlarm.setInformativeText("What you want to do?");
+                msgBoxAlarm.setStandardButtons(QMessageBox::Ok | QMessageBox::Retry | QMessageBox::Close);
+                msgBoxAlarm.setDefaultButton(QMessageBox::Ok);
+                int ret = msgBoxAlarm.exec();
+                Timer->setActive(false);
+            }
         }
-        Timer->display();
+        ui->lstTimers->item(i)->setText(Timer->display());
     }
 }
 
@@ -145,15 +154,32 @@ Timer* MainWindow::changeTimer(Timer* Timer)
     return Timer;
 }
 
+Timer *MainWindow::getCurrentTimer()
+{
+    int currentRow = ui->lstTimers->currentRow();
+    if (currentRow == -1) { return nullptr;}
+    Timer* Timer = Timers[currentRow];
+    return Timer;
+}
+
 
 void MainWindow::on_btnStart_clicked()
 {
-    int currentRow = ui->lstTimers->currentRow();
-    if (currentRow == -1) { return;}
-    Timer* Timer = Timers[currentRow];
+    Timer* Timer = getCurrentTimer();
+    if(!Timer)
+        return;
     Timer->setActive(true);
-    QString display_name = Timer->display();
 
-    ui->lstTimers->currentItem()->setText(display_name);
+    ui->lstTimers->currentItem()->setText(Timer->display());
 
+}
+
+void MainWindow::on_btnStop_clicked()
+{
+    Timer* Timer = getCurrentTimer();
+    if(!Timer)
+        return;
+    Timer->setActive(false);
+
+    ui->lstTimers->currentItem()->setText(Timer->display());
 }

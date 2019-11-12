@@ -39,6 +39,8 @@ private slots:
 
     void on_btnStart_clicked();
 
+    void on_btnStop_clicked();
+
 private:
     Ui::MainWindow *ui;
     QTimer *tmr;
@@ -47,6 +49,7 @@ private:
     void initActions();
     Timer* createTimer();
     Timer* changeTimer(Timer* Timer);
+    Timer* getCurrentTimer();
 
     void clearCurrentTimer();
 };
