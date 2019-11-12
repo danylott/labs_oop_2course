@@ -23,6 +23,7 @@ void MainWindow::clearCurrentTimer()
 {
     ui->lstTimers->setCurrentRow(-1);
     ui->timeEdit->clear();
+    ui->leName->clear();
     ui->rbTimer->setChecked(true);
 }
 
