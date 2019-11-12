@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[15];
-    char stringdata0[245];
+    QByteArrayData data[12];
+    char stringdata0[206];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,21 +37,17 @@ QT_MOC_LITERAL(2, 29, 0), // ""
 QT_MOC_LITERAL(3, 30, 30), // "on_lstTimers_currentRowChanged"
 QT_MOC_LITERAL(4, 61, 10), // "currentRow"
 QT_MOC_LITERAL(5, 72, 18), // "on_btnEdit_clicked"
-QT_MOC_LITERAL(6, 91, 20), // "on_lstTimers_clicked"
-QT_MOC_LITERAL(7, 112, 11), // "QModelIndex"
-QT_MOC_LITERAL(8, 124, 5), // "index"
-QT_MOC_LITERAL(9, 130, 30), // "on_lstTimers_currentRowRemoved"
-QT_MOC_LITERAL(10, 161, 25), // "on_deleteAction_triggered"
-QT_MOC_LITERAL(11, 187, 7), // "checked"
-QT_MOC_LITERAL(12, 195, 10), // "updateTime"
-QT_MOC_LITERAL(13, 206, 19), // "on_btnStart_clicked"
-QT_MOC_LITERAL(14, 226, 18) // "on_btnStop_clicked"
+QT_MOC_LITERAL(6, 91, 30), // "on_lstTimers_currentRowRemoved"
+QT_MOC_LITERAL(7, 122, 25), // "on_deleteAction_triggered"
+QT_MOC_LITERAL(8, 148, 7), // "checked"
+QT_MOC_LITERAL(9, 156, 10), // "updateTime"
+QT_MOC_LITERAL(10, 167, 19), // "on_btnStart_clicked"
+QT_MOC_LITERAL(11, 187, 18) // "on_btnStop_clicked"
 
     },
     "MainWindow\0on_btnAdd_clicked\0\0"
     "on_lstTimers_currentRowChanged\0"
     "currentRow\0on_btnEdit_clicked\0"
-    "on_lstTimers_clicked\0QModelIndex\0index\0"
     "on_lstTimers_currentRowRemoved\0"
     "on_deleteAction_triggered\0checked\0"
     "updateTime\0on_btnStart_clicked\0"
@@ -65,7 +61,7 @@ static const uint qt_meta_data_MainWindow[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -73,23 +69,21 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   59,    2, 0x08 /* Private */,
-       3,    1,   60,    2, 0x08 /* Private */,
-       5,    0,   63,    2, 0x08 /* Private */,
-       6,    1,   64,    2, 0x08 /* Private */,
-       9,    0,   67,    2, 0x08 /* Private */,
-      10,    1,   68,    2, 0x08 /* Private */,
-      12,    0,   71,    2, 0x08 /* Private */,
-      13,    0,   72,    2, 0x08 /* Private */,
-      14,    0,   73,    2, 0x08 /* Private */,
+       1,    0,   54,    2, 0x08 /* Private */,
+       3,    1,   55,    2, 0x08 /* Private */,
+       5,    0,   58,    2, 0x08 /* Private */,
+       6,    0,   59,    2, 0x08 /* Private */,
+       7,    1,   60,    2, 0x08 /* Private */,
+       9,    0,   63,    2, 0x08 /* Private */,
+      10,    0,   64,    2, 0x08 /* Private */,
+      11,    0,   65,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int,    4,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 7,    8,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Bool,   11,
+    QMetaType::Void, QMetaType::Bool,    8,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -106,12 +100,11 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 0: _t->on_btnAdd_clicked(); break;
         case 1: _t->on_lstTimers_currentRowChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 2: _t->on_btnEdit_clicked(); break;
-        case 3: _t->on_lstTimers_clicked((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
-        case 4: _t->on_lstTimers_currentRowRemoved(); break;
-        case 5: _t->on_deleteAction_triggered((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 6: _t->updateTime(); break;
-        case 7: _t->on_btnStart_clicked(); break;
-        case 8: _t->on_btnStop_clicked(); break;
+        case 3: _t->on_lstTimers_currentRowRemoved(); break;
+        case 4: _t->on_deleteAction_triggered((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 5: _t->updateTime(); break;
+        case 6: _t->on_btnStart_clicked(); break;
+        case 7: _t->on_btnStop_clicked(); break;
         default: ;
         }
     }
@@ -146,13 +139,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 8)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 9;
+        _id -= 8;
     }
     return _id;
 }

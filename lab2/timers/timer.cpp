@@ -33,6 +33,31 @@ void Timer::setType(int value)
     type = value;
 }
 
+int Timer::getMusicType() const
+{
+    return music_type;
+}
+
+std::string Timer::getMusicTypeString() const
+{
+    string type_string;
+    if(music_type == 0) {
+        type_string = "Rooster";
+    }
+    else if (music_type == 1) {
+        type_string = "Ahtung";
+    }
+    else {
+        type_string = "Pi-pi-pi-pi";
+    }
+    return type_string;
+}
+
+void Timer::setMusicType(int value)
+{
+    music_type = value;
+}
+
 QTime Timer::getTime() const
 {
     return time;
@@ -110,7 +135,7 @@ QTime Timer::calculateRemainingTime()
 
 QString Timer::display()
 {
-    QString display_name = QString("%1: time: %2 -- %3 is_active: %4 \nRemaining time: %5").arg(this->getName().c_str()).arg(this->getTime().toString()).arg(this->getTypeString().c_str()).arg(this->getActive()).arg(this->getRemainingTime().toString());
+    QString display_name = QString("%1: time: %2 -- %3 is_active: %4\nMelody: %5 \nRemaining time: %6").arg(this->getName().c_str()).arg(this->getTime().toString()).arg(this->getTypeString().c_str()).arg(this->getActive()).arg(this->getMusicTypeString().c_str()).arg(this->getRemainingTime().toString());
     return display_name;
 }
 

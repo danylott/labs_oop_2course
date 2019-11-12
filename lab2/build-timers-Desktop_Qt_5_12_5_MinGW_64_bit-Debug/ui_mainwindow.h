@@ -38,20 +38,30 @@ public:
     QHBoxLayout *horizontalLayout_2;
     QLabel *lblName;
     QLineEdit *leName;
-    QPushButton *btnAdd;
-    QPushButton *btnEdit;
     QWidget *layoutWidget1;
     QHBoxLayout *horizontalLayout;
     QLabel *lblTime;
     QTimeEdit *timeEdit;
-    QPushButton *btnDelete;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout;
     QLabel *lblType;
     QRadioButton *rbTimer;
     QRadioButton *rbAlarm;
+    QWidget *horizontalLayoutWidget;
+    QHBoxLayout *horizontalLayout_3;
     QPushButton *btnStart;
     QPushButton *btnStop;
+    QWidget *horizontalLayoutWidget_2;
+    QHBoxLayout *horizontalLayout_4;
+    QPushButton *btnAdd;
+    QPushButton *btnEdit;
+    QPushButton *btnDelete;
+    QWidget *verticalLayoutWidget_2;
+    QVBoxLayout *verticalLayout_2;
+    QLabel *lblType_2;
+    QRadioButton *rbRooster;
+    QRadioButton *rbAhtung;
+    QRadioButton *rbPipi;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -73,7 +83,7 @@ public:
         lstTimers->setSelectionMode(QAbstractItemView::NoSelection);
         grbStudentDetails = new QGroupBox(centralWidget);
         grbStudentDetails->setObjectName(QString::fromUtf8("grbStudentDetails"));
-        grbStudentDetails->setGeometry(QRect(470, 20, 351, 431));
+        grbStudentDetails->setGeometry(QRect(440, 20, 351, 441));
         layoutWidget = new QWidget(grbStudentDetails);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
         layoutWidget->setGeometry(QRect(10, 30, 221, 27));
@@ -92,13 +102,6 @@ public:
 
         horizontalLayout_2->addWidget(leName);
 
-        btnAdd = new QPushButton(grbStudentDetails);
-        btnAdd->setObjectName(QString::fromUtf8("btnAdd"));
-        btnAdd->setGeometry(QRect(10, 200, 93, 28));
-        btnAdd->setCheckable(false);
-        btnEdit = new QPushButton(grbStudentDetails);
-        btnEdit->setObjectName(QString::fromUtf8("btnEdit"));
-        btnEdit->setGeometry(QRect(130, 200, 93, 28));
         layoutWidget1 = new QWidget(grbStudentDetails);
         layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
         layoutWidget1->setGeometry(QRect(10, 70, 221, 27));
@@ -121,12 +124,9 @@ public:
 
         horizontalLayout->addWidget(timeEdit);
 
-        btnDelete = new QPushButton(grbStudentDetails);
-        btnDelete->setObjectName(QString::fromUtf8("btnDelete"));
-        btnDelete->setGeometry(QRect(250, 200, 88, 27));
         verticalLayoutWidget = new QWidget(grbStudentDetails);
         verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(10, 110, 221, 80));
+        verticalLayoutWidget->setGeometry(QRect(10, 100, 221, 80));
         verticalLayout = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -147,14 +147,83 @@ public:
 
         verticalLayout->addWidget(rbAlarm);
 
-        btnStart = new QPushButton(grbStudentDetails);
+        horizontalLayoutWidget = new QWidget(grbStudentDetails);
+        horizontalLayoutWidget->setObjectName(QString::fromUtf8("horizontalLayoutWidget"));
+        horizontalLayoutWidget->setGeometry(QRect(10, 360, 321, 71));
+        horizontalLayout_3 = new QHBoxLayout(horizontalLayoutWidget);
+        horizontalLayout_3->setSpacing(6);
+        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
+        btnStart = new QPushButton(horizontalLayoutWidget);
         btnStart->setObjectName(QString::fromUtf8("btnStart"));
-        btnStart->setGeometry(QRect(30, 250, 111, 41));
+        btnStart->setMinimumSize(QSize(40, 50));
         btnStart->setCheckable(false);
-        btnStop = new QPushButton(grbStudentDetails);
+
+        horizontalLayout_3->addWidget(btnStart);
+
+        btnStop = new QPushButton(horizontalLayoutWidget);
         btnStop->setObjectName(QString::fromUtf8("btnStop"));
-        btnStop->setGeometry(QRect(200, 250, 111, 41));
+        btnStop->setMinimumSize(QSize(0, 50));
         btnStop->setCheckable(false);
+
+        horizontalLayout_3->addWidget(btnStop);
+
+        horizontalLayoutWidget_2 = new QWidget(grbStudentDetails);
+        horizontalLayoutWidget_2->setObjectName(QString::fromUtf8("horizontalLayoutWidget_2"));
+        horizontalLayoutWidget_2->setGeometry(QRect(10, 300, 321, 61));
+        horizontalLayout_4 = new QHBoxLayout(horizontalLayoutWidget_2);
+        horizontalLayout_4->setSpacing(6);
+        horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
+        btnAdd = new QPushButton(horizontalLayoutWidget_2);
+        btnAdd->setObjectName(QString::fromUtf8("btnAdd"));
+        btnAdd->setMinimumSize(QSize(0, 40));
+        btnAdd->setCheckable(false);
+
+        horizontalLayout_4->addWidget(btnAdd);
+
+        btnEdit = new QPushButton(horizontalLayoutWidget_2);
+        btnEdit->setObjectName(QString::fromUtf8("btnEdit"));
+        btnEdit->setMinimumSize(QSize(0, 40));
+
+        horizontalLayout_4->addWidget(btnEdit);
+
+        btnDelete = new QPushButton(horizontalLayoutWidget_2);
+        btnDelete->setObjectName(QString::fromUtf8("btnDelete"));
+        btnDelete->setMinimumSize(QSize(30, 40));
+
+        horizontalLayout_4->addWidget(btnDelete);
+
+        verticalLayoutWidget_2 = new QWidget(grbStudentDetails);
+        verticalLayoutWidget_2->setObjectName(QString::fromUtf8("verticalLayoutWidget_2"));
+        verticalLayoutWidget_2->setGeometry(QRect(10, 190, 221, 105));
+        verticalLayout_2 = new QVBoxLayout(verticalLayoutWidget_2);
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
+        lblType_2 = new QLabel(verticalLayoutWidget_2);
+        lblType_2->setObjectName(QString::fromUtf8("lblType_2"));
+
+        verticalLayout_2->addWidget(lblType_2);
+
+        rbRooster = new QRadioButton(verticalLayoutWidget_2);
+        rbRooster->setObjectName(QString::fromUtf8("rbRooster"));
+
+        verticalLayout_2->addWidget(rbRooster);
+
+        rbAhtung = new QRadioButton(verticalLayoutWidget_2);
+        rbAhtung->setObjectName(QString::fromUtf8("rbAhtung"));
+
+        verticalLayout_2->addWidget(rbAhtung);
+
+        rbPipi = new QRadioButton(verticalLayoutWidget_2);
+        rbPipi->setObjectName(QString::fromUtf8("rbPipi"));
+
+        verticalLayout_2->addWidget(rbPipi);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -177,16 +246,20 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
         grbStudentDetails->setTitle(QApplication::translate("MainWindow", "  Timer detail -- add / change timer", nullptr));
         lblName->setText(QApplication::translate("MainWindow", "Name:", nullptr));
-        btnAdd->setText(QApplication::translate("MainWindow", "Add", nullptr));
-        btnEdit->setText(QApplication::translate("MainWindow", "Edit", nullptr));
         lblTime->setText(QApplication::translate("MainWindow", "Time:", nullptr));
         timeEdit->setDisplayFormat(QApplication::translate("MainWindow", "H:mm:ss", nullptr));
-        btnDelete->setText(QApplication::translate("MainWindow", "Delete", nullptr));
         lblType->setText(QApplication::translate("MainWindow", "Type:", nullptr));
         rbTimer->setText(QApplication::translate("MainWindow", "Timer", nullptr));
         rbAlarm->setText(QApplication::translate("MainWindow", "Alarm", nullptr));
         btnStart->setText(QApplication::translate("MainWindow", "Start", nullptr));
         btnStop->setText(QApplication::translate("MainWindow", "Stop", nullptr));
+        btnAdd->setText(QApplication::translate("MainWindow", "Add", nullptr));
+        btnEdit->setText(QApplication::translate("MainWindow", "Edit", nullptr));
+        btnDelete->setText(QApplication::translate("MainWindow", "Delete", nullptr));
+        lblType_2->setText(QApplication::translate("MainWindow", "Music:", nullptr));
+        rbRooster->setText(QApplication::translate("MainWindow", "Rooster", nullptr));
+        rbAhtung->setText(QApplication::translate("MainWindow", "Ahtung", nullptr));
+        rbPipi->setText(QApplication::translate("MainWindow", "Pi-pi-pi-pi", nullptr));
     } // retranslateUi
 
 };

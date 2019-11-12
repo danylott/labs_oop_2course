@@ -13,6 +13,7 @@ private:
     QTime time; // for Timer remaining_time = time (at first) // for Alarm remaining_time = sec_to(time)
     QTime remaining_time;
     int type;
+    int music_type;
     bool is_active;
 public:
     Timer();
@@ -22,6 +23,9 @@ public:
     int getType() const;
     string getTypeString() const;
     void setType(int value);
+    int getMusicType() const;
+    string getMusicTypeString() const;
+    void setMusicType(int value);
     QTime getTime() const;
     void setTime(QTime t);
     QTime getRemainingTime() const;

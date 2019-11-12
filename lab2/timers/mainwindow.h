@@ -30,8 +30,6 @@ private slots:
 
     void on_btnEdit_clicked();
 
-    void on_lstTimers_clicked(const QModelIndex &index);
-
     void on_lstTimers_currentRowRemoved();
     void on_deleteAction_triggered(bool checked);
 

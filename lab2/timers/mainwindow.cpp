@@ -68,8 +68,17 @@ void MainWindow::on_lstTimers_currentRowChanged(int currentRow)
     Timer* Timer = Timers[currentRow];
     ui->leName->setText(Timer->getName().c_str());
     ui->timeEdit->setTime(Timer->getTime());
+
     ui->rbAlarm->setChecked(Timer->getType());
     ui->rbTimer->setChecked((Timer->getType() + 1) % 2);
+
+    int music_type = Timer->getMusicType();
+    if(music_type == 0)
+        ui->rbRooster->setChecked(true);
+    if(music_type == 1)
+        ui->rbAhtung->setChecked(true);
+    if(music_type == 2)
+        ui->rbPipi->setChecked(true);
 }
 
 void MainWindow::on_btnEdit_clicked()
@@ -83,9 +92,6 @@ void MainWindow::on_btnEdit_clicked()
 
 }
 
-void MainWindow::on_lstTimers_clicked(const QModelIndex &index)
-{
-}
 
 void MainWindow::on_lstTimers_currentRowRemoved()
 {
@@ -144,6 +150,12 @@ Timer* MainWindow::changeTimer(Timer* Timer)
     Timer->setName(name);
     int type = ui->rbAlarm->isChecked(); // 1 if Alarm, 0 if Timer
     Timer->setType(type);
+    int music_type = 0;
+    if(ui->rbAhtung->isChecked())
+        music_type = 1;
+    if(ui->rbPipi->isChecked())
+        music_type = 2;
+    Timer->setMusicType(music_type);
     QTime time = ui->timeEdit->time();
     Timer->setTime(time);
 
@@ -162,8 +174,13 @@ Timer *MainWindow::getCurrentTimer()
 void MainWindow::timerAlarm(Timer *Timer)
 {
     auto player = new QMediaPlayer;
-
-    player->setMedia(QUrl("http://download-sounds.ru/wp-content/uploads2/2012/05/23.mp3"));
+    int music_type = Timer->getMusicType();
+    if(music_type == 0)
+        player->setMedia(QUrl("http://download-sounds.ru/wp-content/uploads2/2012/05/23.mp3"));
+    if(music_type == 1)
+        player->setMedia(QUrl("http://download-sounds.ru/wp-content/uploads2/2012/05/43.mp3"));
+    if(music_type == 2)
+        player->setMedia(QUrl("http://download-sounds.ru/wp-content/uploads2/2012/05/13.mp3"));
     player->setVolume(50);
     player->play();
     QMessageBox msgBoxAlarm;
