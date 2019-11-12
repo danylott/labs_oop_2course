@@ -216,6 +216,8 @@ void MainWindow::on_btnStart_clicked()
     Timer->setActive(true);
     ui->lstTimers->currentItem()->setText(Timer->display());
 
+    if(Timer->getType() == 1)
+    Timer->setRemainingTime(Timer->calculateRemainingTime()); // to recalculate remaining time for alarm type
 }
 
 void MainWindow::on_btnStop_clicked()
