@@ -23,8 +23,7 @@ void MainWindow::clearCurrentTimer()
 {
     ui->lstTimers->setCurrentRow(-1);
     ui->timeEdit->clear();
-    ui->rbTimer->setDown(1);
-    ui->rbAlarm->setDown(0);
+    ui->rbTimer->setChecked(true);
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
@@ -61,7 +60,8 @@ void MainWindow::on_lstTimers_currentRowChanged(int currentRow)
     Timer Timer = Timers[currentRow];
     ui->leName->setText(Timer.getName().c_str());
     ui->timeEdit->setTime(Timer.getTime());
-    ui->rbAlarm->setDown(Timer.getType());
+    ui->rbAlarm->setChecked(Timer.getType());
+    ui->rbTimer->setChecked((Timer.getType() + 1) % 2);
 }
 
 void MainWindow::on_btnEdit_clicked()
@@ -115,7 +115,7 @@ Timer MainWindow::createTimer()
     Timer Timer;
     string name = ui->leName->text().toUtf8().constData();
     Timer.setName(name);
-    int type = ui->rbAlarm->isDown(); // 1 if Alarm, 0 if Timer
+    int type = ui->rbAlarm->isChecked(); // 1 if Alarm, 0 if Timer
     Timer.setType(type);
     QTime time = ui->timeEdit->time();
     Timer.setTime(time);
