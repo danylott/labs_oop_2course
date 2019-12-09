@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="lab1" targetName="lab1" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="faae8dc9-bfbf-4a0c-a461-46359be2e29d" name="Default Changelist" comment="" />
+    <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="611">
+              <caret line="651" selection-start-line="651" selection-end-line="651" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+                <marker date="1569956367800" expanded="true" signature="17283:17724" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>ListNode</find>
+      <find>списку</find>
+      <find>DoublyLinkedList</find>
+      <find>begin</find>
+      <find>find</find>
+      <find>ArrayList</find>
+      <find>get_test_data</find>
+      <find>my_list</find>
+      <find>list</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>Node</replace>
+      <replace>дерева</replace>
+      <replace>VariableSonTree</replace>
+      <replace>root</replace>
+      <replace>BinTree</replace>
+      <replace>tree</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/main.cpp" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="85" />
+    <option name="y" value="25" />
+    <option name="width" value="1750" />
+    <option name="height" value="980" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane" />
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="lab1" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="lab1" TARGET_NAME="lab1" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="lab1" RUN_TARGET_NAME="lab1">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="faae8dc9-bfbf-4a0c-a461-46359be2e29d" name="Default Changelist" comment="" />
+      <created>1569662938844</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1569662938844</updated>
+      <workItem from="1569662940830" duration="31925000" />
+      <workItem from="1569916101131" duration="267000" />
+      <workItem from="1569922022949" duration="323000" />
+      <workItem from="1569923514150" duration="11107000" />
+      <workItem from="1570252803503" duration="25000" />
+    </task>
+    <task id="LOCAL-00001" summary="prepare first classes for tree and Node">
+      <created>1569693416061</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1569693416061</updated>
+    </task>
+    <task id="LOCAL-00002" summary="some functions(find, print) ready">
+      <created>1569737575528</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1569737575528</updated>
+    </task>
+    <task id="LOCAL-00003" summary="rewrite all completed functions - added dad">
+      <created>1569738632328</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1569738632328</updated>
+    </task>
+    <task id="LOCAL-00004" summary="all funtion for tree with variable count of children ready">
+      <created>1569741902088</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1569741902088</updated>
+    </task>
+    <task id="LOCAL-00005" summary="little fixes">
+      <created>1569742047797</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1569742047797</updated>
+    </task>
+    <task id="LOCAL-00006" summary="tested version of VariableSonTree">
+      <created>1569745047350</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1569745047350</updated>
+    </task>
+    <task id="LOCAL-00007" summary="some improvements">
+      <created>1569745889619</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1569745889619</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Tested binary tree">
+      <created>1569751308256</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1569751308256</updated>
+    </task>
+    <task id="LOCAL-00009" summary="all functions working &#10;TODO: create tests">
+      <created>1569754243826</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1569754243826</updated>
+    </task>
+    <task id="LOCAL-00010" summary="now all bugs fixed">
+      <created>1569755245939</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1569755245939</updated>
+    </task>
+    <task id="LOCAL-00011" summary="first part ready">
+      <created>1569761655782</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1569761655782</updated>
+    </task>
+    <task id="LOCAL-00012" summary="added one way to delete">
+      <created>1569764662446</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1569764662446</updated>
+    </task>
+    <task id="LOCAL-00013" summary="create class date, and work with it">
+      <created>1569955135478</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1569955135478</updated>
+    </task>
+    <task id="LOCAL-00014" summary="tested version of lab1">
+      <created>1569956115432</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1569956115432</updated>
+    </task>
+    <task id="LOCAL-00015" summary="delete extra comments">
+      <created>1569956401888</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1569956401888</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="43647000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-7" y="36" width="1550" height="835" extended-state="6" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26308724" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.13513513" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Database Changes" order="7" />
+      <window_info anchor="bottom" id="Messages" order="8" weight="0.22332859" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32859176" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="11" weight="0.32859176" />
+      <window_info anchor="bottom" id="CMake" order="12" weight="0.32859176" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" weight="0.020134227" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="prepare first classes for tree and Node" />
+    <MESSAGE value="some functions(find, print) ready" />
+    <MESSAGE value="rewrite all completed functions - added dad" />
+    <MESSAGE value="all funtion for tree with variable count of children ready" />
+    <MESSAGE value="little fixes" />
+    <MESSAGE value="tested version of VariableSonTree" />
+    <MESSAGE value="some improvements" />
+    <MESSAGE value="Tested binary tree" />
+    <MESSAGE value="all functions working &#10;TODO: create tests" />
+    <MESSAGE value="now all bugs fixed" />
+    <MESSAGE value="first part ready" />
+    <MESSAGE value="added one way to delete" />
+    <MESSAGE value="create class date, and work with it" />
+    <MESSAGE value="tested version of lab1" />
+    <MESSAGE value="delete extra comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="delete extra comments" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="611">
+          <caret line="651" selection-start-line="651" selection-end-line="651" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+            <marker date="1569956367800" expanded="true" signature="17283:17724" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

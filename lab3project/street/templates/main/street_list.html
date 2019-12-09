@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+  <div class="w3-black w3-bar w3-center">
+    <h2>Перелік вуличних об'єктів:</h2>
+  </div>
+
+  <div class="w3-row-padding w3-padding-large">
+    <div class="w3-quarter">
+      <input id="searchName" class="w3-input" type="text" name="name_vul" placeholder="Пошук..">
+    </div>
+
+    <div class="w3-quarter">
+      <input id="searchDate" class="w3-input" type="date" name="date" value="{{ date_now }}">
+    </div>
+
+    <div class="w3-quarter w3-center">
+      <p id="countStreets" class="w3-large w3-padding">Кількість вулиць: {{ street_count }}</p>
+    </div>
+
+    <div class="w3-quarter">
+      {% if user.is_authenticated %}
+        <a class="w3-btn w3-black w3-right" href="/admin">Адмін сторінка</a>
+      {% else %}
+        <a class="w3-btn w3-black w3-right" href="{% url 'login' %}">Увійти</a>
+      {% endif %}
+    </div>
+
+    </div>
+
+    <table id = "streets" class="w3-table-all">
+      <thead>
+       <tr class="w3-black">
+         <th>Номер у б/д</th>
+         <th>Назва вулиці</th>
+         <th>Тип вулиці</th>
+         <!-- <th>Кількість сегментів</th> -->
+       </tr>
+     </thead>
+
+      {% for street in street_list|slice:":100" %}
+        <tr>
+          <td>{{ street.id }}</td>
+          <td><a href="{% url 'main:detail' street.id %}">{{ street.name }}</a></td>
+          <td>{{ street.type }}</td>
+          <!-- <td>{{ street.count_segments_by_date }}</td> -->
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="5">Вулиці відсутні!</td>
+        </tr>
+      {% endfor %}
+    </table>
+
+    {% load static %}
+    <script src="{% static 'js/search.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{
+  "logger": {
+    "title": "Remote Sync"
+  },
+  "uploadOnSave": true,
+  "useAtomicWrites": true,
+  "deleteLocal": true,
+  "hostname": "192.168.1.9",
+  "port": "22",
+  "target": "/var/www/html/tzrdr/django/test",
+  "ignore": [
+    ".remote-sync.json",
+    ".git/**",
+    "myenv/**"
+  ],
+  "username": "neknu",
+  "password": "Danikt123",
+  "watch": [],
+  "transport": "scp"
+}
