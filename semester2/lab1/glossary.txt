@@ -1,0 +1,18 @@
+B2Invest.com.ua
+
+Investor (використовуємо тільки це слово) -- synonim to depositor
+Entrepreneur (предприниматель) -- synonims: businessman
+Expert (Експерт)
+Project (інвестиційний проект) -- synonims: investment project, startapp
+
+Rating (оцінка проекту) -- synonims: mark, assestment
+
+Мероприятия - ?
+
+Article (стаття) -- synonims: news
+Press release (прес-реліз) - ?
+
+User (користувач веб сайту) -- synonims: Client, Person, 
+Admin (адміністратор веб сайту) -- synonims: Superuser
+
+Message (повідомлення)
