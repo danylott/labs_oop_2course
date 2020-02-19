@@ -7,7 +7,7 @@ Project (інвестиційний проект) -- synonims: investment project, startapp
 
 Rating (оцінка проекту) -- synonims: mark, assestment
 
-Мероприятия - ?
+Meeting - Мероприятия - ?
 
 Article (стаття) -- synonims: news
 Press release (прес-реліз) - ?
