@@ -1,0 +1,42 @@
+Id,Name,Shape Library,Page ID,Contained By,Group,Line Source,Line Destination,Source Arrow,Destination Arrow,Text Area 1
+1,Page,,,,,,,,, Blank UML
+2,Rectangle Container,Flowchart Shapes,1,,37,,,,,
+3,Text,Standard,1,2,37,,,,,Learn about this template
+4,Text,Standard,1,2,37,,,,,"This blank UML template can help you: 
+Access shapes to create UML activity, sequence, state machine, or use case diagrams
+Describe the boundary, structure, and behavior of a system and its objects
+Create a UML diagram starting from a blank canvas
+ Add content to customize this blank canvas to your use case. "
+5,Text,Standard,1,2,37,,,,,"Tutorials (Hold Shift + ⌘ or Ctrl, then click)"
+6,Button,UI Mockups,1,2,37,,,,,Watch Lucidchart basic tutorials
+7,User Image,User Images,1,2,37,,,,,
+8,Actor,UML,1,,,,,,,Entrepreneur
+9,Actor,UML,1,,,,,,,Expert
+10,Actor,UML,1,,,,,,,Investor
+11,Rectangle Container,UML,1,,,,,,,Client side
+12,Rectangle Container,UML,1,,,,,,,Server side
+13,Circle,Standard,1,11,,,,,,Search Investor for current Project
+14,Use Case,UML,1,11,,,,,,Contact with Investor/Enterpreneur
+15,Use Case,UML,1,11,,,,,,Organize meetings
+16,Use Case,UML,1,11,,,,,,Consult Investor/Enterpreneur
+17,Use Case,UML,1,11,,,,,,Search Project
+18,Use Case,UML,1,11,,,,,,Select Expert
+19,Use Case,UML,1,12,,,,,,"Calculate Rating of current Project, and of all Investors, who fit it"
+20,Use Case,UML,1,12,,,,,,"FInd Investors, who fit the Project"
+21,Use Case,UML,1,12,,,,,,Calculate Rating of all Exprerts
+22,Use Case,UML,1,12,,,,,,"Find Projects, that fit for Investor"
+23,Use Case,UML,1,12,,,,,,"Calculate Rating of current Investor and of all Projects, that fit Investor"
+24,Line,,1,,,2,4,None,Arrow,
+25,Line,,1,,,8,13,None,Arrow,
+26,Line,,1,,,25,18,None,Arrow,
+27,Line,,1,,,9,15,None,Arrow,
+28,Line,,1,,,27,14,None,Arrow,
+29,Line,,1,,,27,16,None,Arrow,
+30,Line,,1,,,10,17,None,Arrow,
+31,Line,,1,,,30,18,None,Arrow,
+32,Line,,1,,,13,19,None,Arrow,<<include>>
+33,Line,,1,,,32,20,None,Arrow,<<include>>
+34,Line,,1,,,18,21,None,Arrow,<<include>>
+35,Line,,1,,,17,23,None,Arrow,<<include>>
+36,Line,,1,,,35,22,None,Arrow,<<include>>
+37,Group 1,,1,,,,,,,
