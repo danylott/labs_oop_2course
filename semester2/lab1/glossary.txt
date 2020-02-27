@@ -1,18 +1,18 @@
-B2Invest.com.ua
+п»їB2Invest.com.ua
 
-Investor (використовуємо тільки це слово) -- synonim to depositor
-Entrepreneur (предприниматель) -- synonims: businessman
-Expert (Експерт)
-Project (інвестиційний проект) -- synonims: investment project, startapp
+Investor (РІРёРєРѕСЂРёСЃС‚РѕРІСѓС”РјРѕ С‚С–Р»СЊРєРё С†Рµ СЃР»РѕРІРѕ) -- synonim to depositor
+Entrepreneur (РїСЂРµРґРїСЂРёРЅРёРјР°С‚РµР»СЊ) -- synonims: businessman
+Expert (Р•РєСЃРїРµСЂС‚)
+Project (С–РЅРІРµСЃС‚РёС†С–Р№РЅРёР№ РїСЂРѕРµРєС‚) -- synonims: investment project, startapp
 
-Rating (оцінка проекту) -- synonims: mark, assestment
+Rating (РѕС†С–РЅРєР° РїСЂРѕРµРєС‚Сѓ) -- synonims: mark, assestment
 
-Meeting - Мероприятия - ?
+Meeting - РњРµСЂРѕРїСЂРёСЏС‚РёСЏ - ?
 
-Article (стаття) -- synonims: news
-Press release (прес-реліз) - ?
+Article (СЃС‚Р°С‚С‚СЏ) -- synonims: news
+Press release (РїСЂРµСЃ-СЂРµР»С–Р·) - ?
 
-User (користувач веб сайту) -- synonims: Client, Person, 
-Admin (адміністратор веб сайту) -- synonims: Superuser
+User (РєРѕСЂРёСЃС‚СѓРІР°С‡ РІРµР± СЃР°Р№С‚Сѓ) -- synonims: Client, Person, 
+Admin (Р°РґРјС–РЅС–СЃС‚СЂР°С‚РѕСЂ РІРµР± СЃР°Р№С‚Сѓ) -- synonims: Superuser
 
-Message (повідомлення)
+Message (РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ)
