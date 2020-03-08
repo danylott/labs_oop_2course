@@ -1,10 +1,21 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
-from rest_framework.relations import PrimaryKeyRelatedField
 
 from .models import Category, Capital, Investor, Entrepreneur, Expert, Project, Rating
 
 
-class CategorySerializer(PrimaryKeyRelatedField, serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'password')
+        extra_kwargs = {'password': {'write_only': True, 'required': True}}
+
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        return user
+
+
+class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ('id', 'name')
@@ -17,9 +28,33 @@ class CapitalSerializer(serializers.ModelSerializer):
 
 
 class InvestorSerializer(serializers.ModelSerializer):
-    investor_categories = CategorySerializer(many=True, queryset=Category.objects.all()
-                                             , source='categories')
-
     class Meta:
         model = Investor
-        fields = ('id', 'user', 'investor_categories', 'capital')
+        fields = ('id', 'user', 'categories', 'capital')
+
+
+class EntrepreneurSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Entrepreneur
+        fields = ('id', 'user')
+
+
+class ExpertSerializer(serializers.ModelSerializer):
+    categories = CategorySerializer(many=True)
+    capitals = CapitalSerializer(many=True)
+
+    class Meta:
+        model = Expert
+        fields = ('id', 'user', 'categories', 'capitals')
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ('id', 'name', 'description', 'image', 'no_of_ratings', 'avg_rating', 'entrepreneur', 'investor', 'expert')
+
+
+class RatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rating
+        fields = ('id', 'project', 'user', 'stars')

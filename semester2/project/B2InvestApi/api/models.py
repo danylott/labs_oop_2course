@@ -24,23 +24,23 @@ class Investor(models.Model):
     capital = models.ForeignKey(Capital, on_delete=models.DO_NOTHING)
 
     def __str__(self):
-        return self.user.name
+        return self.user.username
 
 
 class Entrepreneur(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=False, blank=False)
 
     def __str__(self):
-        return self.user.name
+        return self.user.username
 
 
 class Expert(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=False, blank=False)
     categories = models.ManyToManyField(Category, related_name='expert_categories')
-    capital = models.ManyToManyField(Capital, related_name='capitals')
+    capitals = models.ManyToManyField(Capital, related_name='capitals')
 
     def __str__(self):
-        return self.user.name
+        return self.user.username
 
 
 class Project(models.Model):
@@ -53,6 +53,21 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+
+    def no_of_ratings(self):
+        ratings = Rating.objects.filter(project=self)
+        return len(ratings)
+
+    def avg_rating(self):
+        sum = 0
+        ratings = Rating.objects.filter(project=self)
+        for rating in ratings:
+            sum += rating.stars
+
+        if len(ratings) > 0:
+            return sum / len(ratings)
+        else:
+            return 0
 
 
 class Rating(models.Model):
