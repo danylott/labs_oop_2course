@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from rest_framework.authtoken.models import Token
 
 from .models import Category, Capital, Investor, Entrepreneur, Expert, Project, Rating
 
@@ -12,6 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
+        Token.objects.create(user=user)
         return user
 
 
@@ -30,7 +32,7 @@ class CapitalSerializer(serializers.ModelSerializer):
 class InvestorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Investor
-        fields = ('id', 'user', 'categories', 'capital')
+        fields = ('id', 'user', 'categories', 'capital', 'no_of_projects', 'avg_rating')
 
 
 class EntrepreneurSerializer(serializers.ModelSerializer):
@@ -40,8 +42,6 @@ class EntrepreneurSerializer(serializers.ModelSerializer):
 
 
 class ExpertSerializer(serializers.ModelSerializer):
-    categories = CategorySerializer(many=True)
-    capitals = CapitalSerializer(many=True)
 
     class Meta:
         model = Expert
@@ -51,7 +51,8 @@ class ExpertSerializer(serializers.ModelSerializer):
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ('id', 'name', 'description', 'image', 'no_of_ratings', 'avg_rating', 'entrepreneur', 'investor', 'expert')
+        fields = ('id', 'name', 'description', 'image', 'no_of_ratings', 'avg_rating',
+                  'capital', 'categories', 'entrepreneur', 'investor', 'expert')
 
 
 class RatingSerializer(serializers.ModelSerializer):

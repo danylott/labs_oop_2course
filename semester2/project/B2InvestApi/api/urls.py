@@ -9,13 +9,13 @@ from .views import CategoryViewSet, CapitalViewSet, InvestorViewSet, Entrepreneu
 
 router = routers.DefaultRouter()
 router.register('users', UserViewSet)
-router.register('category', CategoryViewSet)
-router.register('capital', CapitalViewSet)
-router.register('investor', InvestorViewSet)
-router.register('entrepreneur', EntrepreneurViewSet)
-router.register('expert', ExpertViewSet)
-router.register('project', ProjectViewSet)
-router.register('rating', RatingViewSet)
+router.register('categories', CategoryViewSet)
+router.register('capitals', CapitalViewSet)
+router.register('investors', InvestorViewSet)
+router.register('entrepreneurs', EntrepreneurViewSet)
+router.register('experts', ExpertViewSet)
+router.register('projects', ProjectViewSet)
+router.register('ratings', RatingViewSet)
 
 
 urlpatterns = [

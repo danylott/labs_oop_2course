@@ -26,6 +26,20 @@ class Investor(models.Model):
     def __str__(self):
         return self.user.username
 
+    def no_of_projects(self):
+        projects = Project.objects.filter(investor=self)
+        return len(projects)
+
+    def avg_rating(self):
+        sum = 0
+        projects = Project.objects.filter(investor=self)
+        for project in projects:
+            sum += project.avg_rating()
+        if len(projects) == 0:
+            return 0
+        else:
+            return sum / len(projects)
+
 
 class Entrepreneur(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=False, blank=False)
@@ -47,6 +61,8 @@ class Project(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
     description = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to="images/projects/", null=True, blank=True)
+    categories = models.ManyToManyField(Category, related_name='project_categories')
+    capital = models.ForeignKey(Capital, on_delete=models.DO_NOTHING, null=False, blank=False)
     entrepreneur = models.ForeignKey(Entrepreneur, on_delete=models.CASCADE, null=False, blank=False)
     investor = models.ForeignKey(Investor, on_delete=models.DO_NOTHING, null=True, blank=True)
     expert = models.ForeignKey(Expert, on_delete=models.DO_NOTHING, null=True, blank=True)
