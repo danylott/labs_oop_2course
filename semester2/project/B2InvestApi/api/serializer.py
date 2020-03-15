@@ -36,27 +36,21 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class InvestorSerializer(serializers.ModelSerializer):
-    profile = ProfileSerializer(many=False)
-
     class Meta:
         model = Investor
-        fields = ('id', 'user', 'profile', 'categories', 'capital', 'no_of_projects', 'avg_rating')
+        fields = ('id', 'user', 'image', 'phone', 'info', 'categories', 'capital', 'no_of_projects', 'avg_rating')
 
 
 class EntrepreneurSerializer(serializers.ModelSerializer):
-    profile = ProfileSerializer(many=False)
-
     class Meta:
         model = Entrepreneur
-        fields = ('id', 'user', 'profile')
+        fields = ('id', 'user', 'image', 'phone', 'info')
 
 
 class ExpertSerializer(serializers.ModelSerializer):
-    profile = ProfileSerializer(many=False)
-
     class Meta:
         model = Expert
-        fields = ('id', 'user', 'profile', 'categories', 'capitals')
+        fields = ('id', 'user', 'image', 'phone', 'info', 'categories', 'capitals')
 
 
 class ProjectSerializer(serializers.ModelSerializer):

@@ -39,9 +39,6 @@ class InvestorViewSetTestCase(APITestCase):
         category2 = Category.objects.create(name="test2")
         self.categories = [category1, category2]
 
-        self.profile = Profile.objects.create(phone="+380939501698",
-                                              info="Lorem Ipsum Text")
-
     def api_authentication(self):
         self.client.credentials(HTTP_AUTHORIZATION="Token " + self.token.key)
 
@@ -61,16 +58,16 @@ class InvestorViewSetTestCase(APITestCase):
 
     def test_investor_update_by_owner(self):
         response = self.client.put(reverse("investor-detail", kwargs={"pk": 1}),
-                                   {"categories": self.categories})
-        print(response.content)
-        print("dddddddddddddddddddddddddddddddd")
-        # self.assertEqual(response.status_code, status.HTTP_200_OK)
+                                   {"user": 1, "categories": [1], "capital": 1, "phone": "+380939501698"})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(json.loads(response.content),
-                         {"user": 1, "categories": [1, 2], "profile": None, "capital": 1})
+                         {"id": 1, "user": 1, "image": None, "phone": "+380939501698", "info": None, "categories": [1],
+                          "capital": 1, "no_of_projects": 0,"avg_rating": 0})
 
     def test_investor_update_by_random_user(self):
         random_user = User.objects.create_user(username="random", password="random")
         self.client.force_authenticate(user=random_user)
         response = self.client.put(reverse("investor-detail", kwargs={"pk": 1}),
-                                   {"categories": self.categories, "profile": self.profile})
+                                   {"user": 1, "categories": [1], "capital": 1, "phone": "+380939501698"})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+

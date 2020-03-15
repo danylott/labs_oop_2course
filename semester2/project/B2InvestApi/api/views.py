@@ -12,6 +12,7 @@ from .serializer import CategorySerializer, CapitalSerializer, InvestorSerialize
     EntrepreneurSerializer, ProjectSerializer, RatingSerializer, UserSerializer
 
 from .utils import check_compatibility_expert_project, check_compatibility_investor_project
+from .permissions import IsOwnerOrReadOnly
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -39,7 +40,8 @@ class InvestorViewSet(viewsets.ModelViewSet):
     queryset = Investor.objects.all()
     serializer_class = InvestorSerializer
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = [IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly]
 
     @action(detail=False, methods=['GET'])
     def get_queryset(self):
