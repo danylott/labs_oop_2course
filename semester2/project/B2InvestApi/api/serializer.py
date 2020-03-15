@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 
-from .models import Category, Capital, Investor, Entrepreneur, Expert, Project, Rating
+from .models import Category, Capital, Profile, Investor, Entrepreneur, Expert, Project, Rating
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -29,23 +29,34 @@ class CapitalSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'amount_of_money')
 
 
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ('image', 'phone', 'info')
+
+
 class InvestorSerializer(serializers.ModelSerializer):
+    profile = ProfileSerializer(many=False)
+
     class Meta:
         model = Investor
-        fields = ('id', 'user', 'categories', 'capital', 'no_of_projects', 'avg_rating')
+        fields = ('id', 'user', 'profile', 'categories', 'capital', 'no_of_projects', 'avg_rating')
 
 
 class EntrepreneurSerializer(serializers.ModelSerializer):
+    profile = ProfileSerializer(many=False)
+
     class Meta:
         model = Entrepreneur
-        fields = ('id', 'user')
+        fields = ('id', 'user', 'profile')
 
 
 class ExpertSerializer(serializers.ModelSerializer):
+    profile = ProfileSerializer(many=False)
 
     class Meta:
         model = Expert
-        fields = ('id', 'user', 'categories', 'capitals')
+        fields = ('id', 'user', 'profile', 'categories', 'capitals')
 
 
 class ProjectSerializer(serializers.ModelSerializer):

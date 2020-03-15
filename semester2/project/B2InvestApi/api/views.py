@@ -66,14 +66,12 @@ class InvestorViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['GET'])
     def find_projects(self, request, pk=None):
         investor = Investor.objects.get(id=pk)
-        projects = Project.objects.filter(capital=investor.capital, investor=None)
+        projects = Project.objects.all()
 
         project_list = []
         for project in projects:
-            for category in project.categories.all():
-                if category in investor.categories.all():
-                    project_list.append(project.id)
-                    break
+            if investor.check_project_fit(project):
+                project_list.append(project.id)
         projects = Project.objects.filter(id__in=project_list)
 
         # sort by avg_rating
@@ -86,6 +84,32 @@ class InvestorViewSet(viewsets.ModelViewSet):
         else:
             response = {'message': 'Projects not found'}
             return Response(response, status=status.HTTP_204_NO_CONTENT)
+
+    @action(detail=True, methods=['POST'])
+    def choose_project(self, request, pk=None):
+        if 'project' in request.data:
+            investor = Investor.objects.get(id=pk)
+            project_id = request.data['project']
+
+            try:
+                project = Project.objects.get(id=project_id)
+                if project.check_investor_fit(investor):
+                    project.investor = investor
+                    project.save()
+                    response = {'message': 'Project updated - set investor'}
+                    return Response(response, status=status.HTTP_200_OK)
+
+                else:
+                    response = {'message': 'Investor does not fit this Project'}
+                    return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
+            except:
+                response = {'message': 'Project does not exists'}
+                return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
+        else:
+            response = {'message': 'You need to provide project'}
+            return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
 
 class EntrepreneurViewSet(viewsets.ModelViewSet):
@@ -145,14 +169,13 @@ class ProjectViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['GET'])
     def find_investors(self, request, pk=None):
         project = Project.objects.get(id=pk)
-        investors = Investor.objects.filter(capital=project.capital)
+        investors = Investor.objects.all()
 
         investor_list = []
         for investor in investors:
-            for category in investor.categories.all():
-                if category in project.categories.all():
-                    investor_list.append(investor.id)
-                    break
+            if project.check_investor_fit(investor):
+                investor_list.append(investor.id)
+
         investors = Investor.objects.filter(id__in=investor_list)
 
         # sort by avg_rating

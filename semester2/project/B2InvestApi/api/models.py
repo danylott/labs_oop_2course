@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+from phonenumber_field.modelfields import PhoneNumberField
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
@@ -18,8 +20,15 @@ class Capital(models.Model):
         return self.amount_of_money
 
 
+class Profile(models.Model):
+    image = models.ImageField(upload_to="images/profiles/", null=True, blank=True)
+    phone = PhoneNumberField(null=True, blank=True)
+    info = models.TextField(null=True, blank=True)
+
+
 class Investor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=False, blank=False)
+    profile = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True, blank=True)
     categories = models.ManyToManyField(Category, related_name='investor_categories')
     capital = models.ForeignKey(Capital, on_delete=models.DO_NOTHING)
 
@@ -40,9 +49,18 @@ class Investor(models.Model):
         else:
             return sum / len(projects)
 
+    def check_project_fit(self, project):
+        if project.investor is None:
+            if self.capital == project.capital:
+                for category in project.categories.all():
+                    if category in self.categories.all():
+                        return True
+        return False
+
 
 class Entrepreneur(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=False, blank=False)
+    profile = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.user.username
@@ -50,11 +68,23 @@ class Entrepreneur(models.Model):
 
 class Expert(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=False, blank=False)
+    profile = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True, blank=True)
     categories = models.ManyToManyField(Category, related_name='expert_categories')
     capitals = models.ManyToManyField(Capital, related_name='capitals')
+    cost = models.IntegerField(blank=False, null=False)
 
     def __str__(self):
         return self.user.username
+
+    def avg_rating(self):
+        sum = 0
+        projects = Project.objects.filter(expert=self)
+        for project in projects:
+            sum += project.avg_rating()
+        if len(projects) == 0:
+            return 0
+        else:
+            return sum / len(projects)
 
 
 class Project(models.Model):
@@ -84,6 +114,14 @@ class Project(models.Model):
             return sum / len(ratings)
         else:
             return 0
+
+    def check_investor_fit(self, investor):
+        if self.investor is None:
+            if self.capital == investor.capital:
+                for category in investor.categories.all():
+                    if category in self.categories.all():
+                        return True
+        return False
 
 
 class Rating(models.Model):
