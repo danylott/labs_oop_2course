@@ -18,7 +18,7 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (AllowAny,)
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -175,7 +175,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
         investor_list = []
         for investor in investors:
-            if project.check_investor_fit(investor):
+            if check_compatibility_investor_project(investor, project):
                 investor_list.append(investor.id)
 
         investors = Investor.objects.filter(id__in=investor_list)
@@ -190,6 +190,55 @@ class ProjectViewSet(viewsets.ModelViewSet):
         else:
             response = {'message': 'Investors not found'}
             return Response(response, status=status.HTTP_204_NO_CONTENT)
+
+    @action(detail=True, methods=['GET'])
+    def find_experts(self, request, pk=None):
+        project = Project.objects.get(id=pk)
+        experts = Expert.objects.all()
+
+        expert_list = []
+        for expert in experts:
+            if check_compatibility_expert_project(expert, project):
+                expert_list.append(expert.id)
+
+        experts = Expert.objects.filter(id__in=expert_list)
+
+        # sort by avg_rating
+        experts = sorted(experts.all(), key=lambda t: t.avg_rating())
+
+        if experts:
+            serializer = ExpertSerializer(experts, many=True)
+            response = {'message': 'Experts found', 'result': serializer.data}
+            return Response(response, status=status.HTTP_200_OK)
+        else:
+            response = {'message': 'Experts not found'}
+            return Response(response, status=status.HTTP_204_NO_CONTENT)
+
+    @action(detail=True, methods=['POST'])
+    def choose_expert(self, request, pk=None):
+        if 'expert' in request.data:
+            project = Project.objects.get(id=pk)
+            expert_id = request.data['expert']
+
+            try:
+                expert = Expert.objects.get(id=expert_id)
+                if check_compatibility_expert_project(expert, project):
+                    project.expert = expert
+                    project.save()
+                    response = {'message': 'Project updated - set expert'}
+                    return Response(response, status=status.HTTP_200_OK)
+
+                else:
+                    response = {'message': 'Expert does not fit this Project'}
+                    return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
+            except:
+                response = {'message': 'Expert does not exists'}
+                return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
+        else:
+            response = {'message': 'You need to provide expert'}
+            return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['POST'])
     def rate_project(self, request, pk=None):
