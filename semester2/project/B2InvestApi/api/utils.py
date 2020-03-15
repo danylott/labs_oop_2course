@@ -8,4 +8,8 @@ def check_compatibility_investor_project(investor, project):
 
 
 def check_compatibility_expert_project(expert, project):
-    pass
+    if project.capital in expert.capitals:
+        for category in project.categories.all():
+            if category in expert.categories.all():
+                return True
+    return False

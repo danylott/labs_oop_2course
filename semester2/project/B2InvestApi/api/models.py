@@ -21,16 +21,18 @@ class Capital(models.Model):
 
 
 class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=False, blank=False)
     image = models.ImageField(upload_to="images/profiles/", null=True, blank=True)
     phone = PhoneNumberField(null=True, blank=True)
     info = models.TextField(null=True, blank=True)
 
+    class Meta:
+        abstract = True
 
-class Investor(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=False, blank=False)
-    profile = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True, blank=True)
+
+class Investor(Profile):
     categories = models.ManyToManyField(Category, related_name='investor_categories')
-    capital = models.ForeignKey(Capital, on_delete=models.DO_NOTHING)
+    capital = models.ForeignKey(Capital, on_delete=models.DO_NOTHING, null=False, blank=False)
 
     def __str__(self):
         return self.user.username
@@ -50,17 +52,13 @@ class Investor(models.Model):
             return sum / len(projects)
 
 
-class Entrepreneur(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=False, blank=False)
-    profile = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True, blank=True)
+class Entrepreneur(Profile):
 
     def __str__(self):
         return self.user.username
 
 
-class Expert(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=False, blank=False)
-    profile = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True, blank=True)
+class Expert(Profile):
     categories = models.ManyToManyField(Category, related_name='expert_categories')
     capitals = models.ManyToManyField(Capital, related_name='capitals')
     cost = models.IntegerField(blank=False, null=False)

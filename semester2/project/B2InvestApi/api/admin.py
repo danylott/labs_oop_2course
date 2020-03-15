@@ -3,7 +3,6 @@ from .models import Category, Capital, Profile, Investor, Entrepreneur, Expert, 
 
 admin.site.register(Category)
 admin.site.register(Capital)
-admin.site.register(Profile)
 admin.site.register(Investor)
 admin.site.register(Entrepreneur)
 admin.site.register(Expert)
