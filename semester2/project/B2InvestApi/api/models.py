@@ -49,14 +49,6 @@ class Investor(models.Model):
         else:
             return sum / len(projects)
 
-    def check_project_fit(self, project):
-        if project.investor is None:
-            if self.capital == project.capital:
-                for category in project.categories.all():
-                    if category in self.categories.all():
-                        return True
-        return False
-
 
 class Entrepreneur(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=False, blank=False)
@@ -114,14 +106,6 @@ class Project(models.Model):
             return sum / len(ratings)
         else:
             return 0
-
-    def check_investor_fit(self, investor):
-        if self.investor is None:
-            if self.capital == investor.capital:
-                for category in investor.categories.all():
-                    if category in self.categories.all():
-                        return True
-        return False
 
 
 class Rating(models.Model):

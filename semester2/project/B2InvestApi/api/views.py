@@ -11,6 +11,8 @@ from .models import Category, Capital, Investor, Entrepreneur, Expert, Project, 
 from .serializer import CategorySerializer, CapitalSerializer, InvestorSerializer, ExpertSerializer, \
     EntrepreneurSerializer, ProjectSerializer, RatingSerializer, UserSerializer
 
+from .utils import check_compatibility_expert_project, check_compatibility_investor_project
+
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -70,7 +72,7 @@ class InvestorViewSet(viewsets.ModelViewSet):
 
         project_list = []
         for project in projects:
-            if investor.check_project_fit(project):
+            if check_compatibility_investor_project(investor, project):
                 project_list.append(project.id)
         projects = Project.objects.filter(id__in=project_list)
 
@@ -93,7 +95,7 @@ class InvestorViewSet(viewsets.ModelViewSet):
 
             try:
                 project = Project.objects.get(id=project_id)
-                if project.check_investor_fit(investor):
+                if check_compatibility_investor_project(investor, project):
                     project.investor = investor
                     project.save()
                     response = {'message': 'Project updated - set investor'}
