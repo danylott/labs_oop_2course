@@ -1,5 +1,5 @@
-#Project B2Invest
-###API:
+# Project B2Invest
+### API:
     -run tests: `python manage.py test`
     -see documentation:
     `python manage.py runserver'
