@@ -203,6 +203,10 @@ class ProjectViewSetTestCase(APITestCase):
         response = self.client.post('/api/projects/1/choose_expert/', {"expert": 1})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_investor_choose_project_not_exist(self):
+    def test_project_choose_expert_not_exist(self):
         response = self.client.post('/api/projects/1/choose_expert/', {"expert": 2})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_rate_project_by_investor(self):
+        response = self.client.post('/api/projects/1/rate_project/', {"stars": 5})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
