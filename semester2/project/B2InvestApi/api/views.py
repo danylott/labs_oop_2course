@@ -46,13 +46,13 @@ class InvestorViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['GET'])
     def get_queryset(self):
         investors = Investor.objects.all()
-        if 'capitals' in self.request.data:
-            capitals = self.request.data['capitals']
+        if 'capitals_filter' in self.request.data:
+            capitals = self.request.data['capitals_filter']
             if capitals:
                 investors = investors.filter(capital__in=capitals)
 
-        if 'categories' in self.request.data:
-            categories = self.request.data['categories']
+        if 'categories_filter' in self.request.data:
+            categories = self.request.data['categories_filter']
             if categories:
                 investor_list = []
                 for investor in investors:
@@ -149,13 +149,13 @@ class ProjectViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['GET'])
     def get_queryset(self):
         projects = Project.objects.all()
-        if 'capitals' in self.request.data:
-            capitals = self.request.data['capitals']
+        if 'capitals_filter' in self.request.data:
+            capitals = self.request.data['capitals_filter']
             if capitals:
                 projects = projects.filter(capital__in=capitals)
 
-        if 'categories' in self.request.data:
-            categories = self.request.data['categories']
+        if 'categories_filter' in self.request.data:
+            categories = self.request.data['categories_filter']
             if categories:
                 project_list = []
                 for project in projects:

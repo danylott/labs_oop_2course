@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Capital, Profile, Investor, Entrepreneur, Expert, Project, Rating, Article, Release
+from .models import Category, Capital, Investor, Entrepreneur, Expert, Project, Rating, Article, Release
 
 admin.site.register(Category)
 admin.site.register(Capital)
