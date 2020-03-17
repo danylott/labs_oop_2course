@@ -120,14 +120,16 @@ class EntrepreneurViewSet(viewsets.ModelViewSet):
     queryset = Entrepreneur.objects.all()
     serializer_class = EntrepreneurSerializer
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = [IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly]
 
 
 class ExpertViewSet(viewsets.ModelViewSet):
     queryset = Expert.objects.all()
     serializer_class = ExpertSerializer
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = [IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly]
 
 
 class ProjectFilter(filters.FilterSet):
@@ -142,7 +144,8 @@ class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     authentication_classes = (TokenAuthentication, )
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = [IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly]
     # filter_backends = (DjangoFilterBackend, )
     # filterset_class = ProjectFilter
 
