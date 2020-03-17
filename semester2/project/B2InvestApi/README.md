@@ -1,4 +1,10 @@
 # Project B2Invest
+### Quickstart:
+    WINDOWS:
+    `python -m venv venv`
+    `venv\bin\activate`
+    `pip install -r requirements.txt`
+    `python manage.py runserver`
 ### API:
     -run tests: `python manage.py test`
     -see documentation:
