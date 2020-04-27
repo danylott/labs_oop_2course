@@ -183,7 +183,7 @@ class ProjectViewSetTestCase(APITestCase):
         response = self.client.put(reverse("project-detail", kwargs={"pk": 1}),
                                    {"entrepreneur": 1, "categories": [1, 2], "capital": 1,
                                     "name": "Changed Project", "description": "Lorem Ipsum"})
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_project_find_investors(self):
         response = self.client.get('/api/projects/1/find_investors/')
