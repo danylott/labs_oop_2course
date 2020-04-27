@@ -38,7 +38,12 @@ class App extends Component {
   }
 
   newProject = () => {
-    this.setState({editedProject: {name: '', description: ''}})
+    this.setState({editedProject: {name: '', description: '', capital: 1,
+    categories: [], entrepreneur: 1}})
+  }
+
+  cancelForm = () => {
+    this.setState({editedProject: null})
   }
 
   render(){
@@ -52,7 +57,7 @@ class App extends Component {
             <div>
               { !this.state.editedProject ? 
                 <ProjectDetails project={this.state.selectedProject} updateProject={this.loadProject}/>
-                : <ProjectFrom project={this.state.editedProject} />}
+                : <ProjectFrom project={this.state.editedProject} cancelForm={this.cancelForm} />}
             </div> 
           </div>
       </div>
