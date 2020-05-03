@@ -78,7 +78,6 @@ class ProjectForm extends Component {
     }
     
     saveClicked = () => {
-        console.log(this.state.editedProject);
         fetch(`${process.env.REACT_APP_API_URL}/api/projects/`, {
             method: 'POST',
             headers: {
@@ -136,9 +135,6 @@ class ProjectForm extends Component {
                 ))}
                 </ul>
 
-                <span>Entrepreneur</span><br />
-                <input type="number" name="entrepreneur" value={this.state.editedProject.entrepreneur}
-                    onChange={this.inputChanged} /><br />
                 {/* check if exist project or we just creating it */}
                 {!this.props.project.id ? 
                 <button disabled={isDisabled} onClick={this.saveClicked}>Save</button> :

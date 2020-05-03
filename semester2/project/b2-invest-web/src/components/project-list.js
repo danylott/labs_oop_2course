@@ -16,7 +16,7 @@ function ProjectList(props) {
         fetch(`${process.env.REACT_APP_API_URL}/api/projects/${project.id}/`, {
             method: 'DELETE',
             headers: {
-                'Authorization': `Token ${this.props.token}`,
+                'Authorization': `Token ${props.token}`,
                 'Content-Type': 'application/json',
             },
             }).then( resp => props.projectDeleted(project))
