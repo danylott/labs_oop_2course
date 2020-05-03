@@ -32,9 +32,9 @@ function ProjectList(props) {
             { props.projects.map( project => {
                 return (
                     <div key={project.id} className="project-item">
-                        <h3 onClick={projectClicked(project)}>
+                        <h2 className="project-name" onClick={projectClicked(project)}>
                             {project.name}
-                        </h3>
+                        </h2>
                     <FontAwesome name="edit" onClick={() => editClicked(project)} />
                     <FontAwesome name="trash" onClick={() => removeClicked(project)}/>
                     </div>

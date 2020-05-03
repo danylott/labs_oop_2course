@@ -5,7 +5,7 @@ import Checkbox from './checkbox';
 class ProjectForm extends Component {
 
     state = {
-        editedProject: this.props.project,
+        editedProject: {...this.props.project},
         categories: [
             {
               name: 'categories',
@@ -34,6 +34,7 @@ class ProjectForm extends Component {
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
             this.updateChecked();
+            this.setState({editedProject: {...this.props.project},})
             console.log('changed');
         }
     }
@@ -41,7 +42,7 @@ class ProjectForm extends Component {
     updateChecked = () => {
         let categories = this.state.categories;
         categories.forEach(category => {
-            category.isChecked = this.props.project.categories.indexOf(category.value) !== -1;           
+            category.isChecked = this.state.editedProject.categories.indexOf(category.value) !== -1;           
         })
         this.setState({categories: categories})
     }
@@ -88,52 +89,62 @@ class ProjectForm extends Component {
             },
             body: JSON.stringify(this.state.editedProject)
             }).then( resp => resp.json())
-            .then( res => console.log(res))
+            .then( res => this.props.newProject(res))
             .catch( error => console.log(error))
     }
 
     updateClicked = () => {
-        console.log(this.state.editedProject);
+        fetch(`${process.env.REACT_APP_API_URL}/api/projects/${this.props.project.id}/`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': 'Token 48f70e1b25d0a31ea4c8ef0b90dcebff1d0ea0f7',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(this.state.editedProject)
+            }).then( resp => resp.json())
+            .then( res => this.props.editProject(res))
+            .catch( error => console.log(error))
     }
 
+    // TODO: make information non-static
     render() {
+
+        const isDisabled = this.state.editedProject.name.length === 0 ||
+            this.state.editedProject.description.length === 0 ||
+            this.state.editedProject.categories.length === 0;
+
         return (
             <React.Fragment>
                 <span>Name</span><br />
-                <input type="text" name="name" value={this.props.project.name}
+                <input type="text" name="name" value={this.state.editedProject.name}
                     onChange={this.inputChanged} /><br />
                 <span>Description</span><br />
-                <textarea name="description" value={this.props.project.description} 
+                <textarea name="description" value={this.state.editedProject.description} 
                     onChange={this.inputChanged} /><br />
 
                 <span>Capital</span><br />
-                <input type="number" name="capital" value={this.props.project.capital}
+                <input type="number" name="capital" value={this.state.editedProject.capital}
                     onChange={this.inputChanged} /><br />
-
-                {/* <span>Categories</span><br /> */}
-                {/* <input type="checkbox" name="categories[]" value={this.props.project.categories[0]} checked={1}
-                    onChange={this.inputChanged} />Category 1<br />
-
-                <input type="checkbox" name="categories[]" value={this.props.project.categories[1]} checked={this.props.project.categories.indexOf(2) !== -1}
-                    onChange={this.inputChanged} />Category 2<br />
-
-                <input type="checkbox" name="categories[]" value={this.props.project.categories[2]} checked={this.props.project.categories.indexOf(3) !== -1}
-                    onChange={this.inputChanged} />Category 3<br /> */}
-
+                
+                <span>Categories</span>
+                <ul>
                 {this.state.categories.map(item => (
-                    <label key={item.key}>
-                    {item.label}
-                    <Checkbox name={item.name} value={item.value} checked={item.isChecked} onChange={this.checkboxChanged} />
-                    <br /></label>
+                    <li key={item.key}>
+                        <label>
+                        {item.label}
+                        <Checkbox name={item.name} value={item.value} checked={item.isChecked} onChange={this.checkboxChanged} />
+                        <br /></label>
+                    </li>
                 ))}
+                </ul>
 
                 <span>Entrepreneur</span><br />
-                <input type="number" name="entrepreneur" value={this.props.project.entrepreneur}
+                <input type="number" name="entrepreneur" value={this.state.editedProject.entrepreneur}
                     onChange={this.inputChanged} /><br />
                 {/* check if exist project or we just creating it */}
                 {!this.props.project.id ? 
-                <button onClick={this.saveClicked}>Save</button> :
-                <button onClick={this.updateClicked}>Update</button>}
+                <button disabled={isDisabled} onClick={this.saveClicked}>Save</button> :
+                <button disabled={isDisabled} onClick={this.updateClicked}>Update</button>}
                 
                 <button onClick={this.cancelClicked}>Cancel</button>
             </React.Fragment>

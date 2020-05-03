@@ -4,6 +4,8 @@ import ProjectList from './components/project-list';
 import ProjectDetails from './components/project-details';
 import ProjectFrom from './components/project-form';
 
+var FontAwesome = require('react-fontawesome');
+
 class App extends Component {
 
   state = {
@@ -24,8 +26,24 @@ class App extends Component {
     .catch( error => console.log(error))
   }
 
+  replaceProject = project => {
+    let projects = this.state.projects;
+    let index = projects.findIndex(proj => proj.id === project.id);
+    projects[index] = project;
+    this.setState({projects: projects, selectedProject: project, editedProject: null})
+    console.log(projects);
+  }
+
   loadProject = project => {
     this.setState({selectedProject: project, editedProject: null})
+    // console.log(project);
+    // // TODO write find project (replace project function)
+    // let projects = this.state.projects;
+    // let index = projects.indexOf(project);
+    // projects[index] = project;
+    // console.log(index);
+    // console.log(projects);
+    // this.setState({projects: projects});
   }
 
   projectDeleted = selProject => {
@@ -46,10 +64,17 @@ class App extends Component {
     this.setState({editedProject: null})
   }
 
+  addProject = project => {
+    this.setState({projects: [...this.state.projects, project]})
+  }
+
   render(){
     return (
       <div className="App">
-          <h1>B2Invest</h1>
+          <h1>
+            <span>B2Invest</span>
+            <FontAwesome name="briefcase"/>
+          </h1>
           <div className="layout">
             <ProjectList projects={this.state.projects} projectClicked={this.loadProject}
               projectDeleted={this.projectDeleted} editClicked={this.editClicked} 
@@ -57,7 +82,8 @@ class App extends Component {
             <div>
               { !this.state.editedProject ? 
                 <ProjectDetails project={this.state.selectedProject} updateProject={this.loadProject}/>
-                : <ProjectFrom project={this.state.editedProject} cancelForm={this.cancelForm} />}
+                : <ProjectFrom project={this.state.editedProject} cancelForm={this.cancelForm} 
+                  newProject={this.addProject} editProject={this.replaceProject}/>}
             </div> 
           </div>
       </div>
