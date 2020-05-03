@@ -59,6 +59,29 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'description', 'image', 'no_of_ratings', 'avg_rating',
                   'capital', 'categories', 'entrepreneur', 'investor', 'expert')
 
+        extra_kwargs = {'entrepreneur': {'read_only': True, 'required': False}}
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        try:
+            entrepreneur = Entrepreneur.objects.get(user=user)
+            categories = validated_data['categories']
+            del validated_data['categories']
+            post = Project.objects.create(
+                entrepreneur=entrepreneur,
+                **validated_data
+            )
+            post.categories.set(categories)
+        except:
+            categories = validated_data['categories']
+            del validated_data['categories']
+            post = Project.objects.create(
+                **validated_data
+            )
+            post.categories.set(categories)
+        return post
+
+
 
 class RatingSerializer(serializers.ModelSerializer):
     class Meta:
