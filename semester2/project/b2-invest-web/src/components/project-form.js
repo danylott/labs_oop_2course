@@ -74,9 +74,7 @@ class ProjectForm extends Component {
             }
         }   
         })
-        console.log(project)
-        this.setState({categories: categories})
-        this.setState({editedProject: project})
+        this.setState({categories: categories, editedProject: project})
     }
     
     saveClicked = () => {
