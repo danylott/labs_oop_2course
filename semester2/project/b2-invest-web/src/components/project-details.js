@@ -15,7 +15,7 @@ class ProjectDetails extends Component {
         fetch(`${process.env.REACT_APP_API_URL}/api/projects/${this.props.project.id}/rate_project/`, {
         method: 'POST',
         headers: {
-            'Authorization': 'Token 48f70e1b25d0a31ea4c8ef0b90dcebff1d0ea0f7',
+            'Authorization': `Token ${this.props.token}`,
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({stars: stars})
@@ -28,7 +28,7 @@ class ProjectDetails extends Component {
         fetch(`${process.env.REACT_APP_API_URL}/api/projects/${this.props.project.id}/`, {
         method: 'GET',
         headers: {
-            'Authorization': 'Token 48f70e1b25d0a31ea4c8ef0b90dcebff1d0ea0f7',
+            'Authorization': `Token ${this.props.token}`,
             'Content-Type': 'application/json',
         },
         }).then( resp => resp.json())

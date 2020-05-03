@@ -6,14 +6,15 @@ import Login from './components/login';
 import ProjectAdmin from './components/project-admin';
 import * as serviceWorker from './serviceWorker';
 import { Route, BrowserRouter } from 'react-router-dom';
+import { CookiesProvider } from 'react-cookie';
 
 const routing = (
   <BrowserRouter>
-    <div>
+    <CookiesProvider>
       <Route exact path="/" component={Login} />
       <Route exact path="/main" component={App} />
       <Route exact path="/projects/admin" component={ProjectAdmin} />
-    </div>
+    </CookiesProvider>
   </BrowserRouter>
 )
 

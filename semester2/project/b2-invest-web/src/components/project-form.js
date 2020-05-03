@@ -82,7 +82,7 @@ class ProjectForm extends Component {
         fetch(`${process.env.REACT_APP_API_URL}/api/projects/`, {
             method: 'POST',
             headers: {
-                'Authorization': 'Token 48f70e1b25d0a31ea4c8ef0b90dcebff1d0ea0f7',
+                'Authorization': `Token ${this.props.token}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(this.state.editedProject)
@@ -95,7 +95,7 @@ class ProjectForm extends Component {
         fetch(`${process.env.REACT_APP_API_URL}/api/projects/${this.props.project.id}/`, {
             method: 'PUT',
             headers: {
-                'Authorization': 'Token 48f70e1b25d0a31ea4c8ef0b90dcebff1d0ea0f7',
+                'Authorization': `Token ${this.props.token}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(this.state.editedProject)
