@@ -65,16 +65,11 @@ button:disabled {
   cursor: not-allowed;
 }
 
-input, textarea {
+input:not([type="checkbox"]), textarea, select {
   width: 100%;
   padding: 10px;
   margin: 8px 0;
   font-size: 0.8em;
-}
-
-input[type="checkbox"] {
-  width: 20px;
-  padding: 3px;
 }
 
 h2 {
@@ -105,4 +100,19 @@ h1 span.fa {
 .error {
   color: crimson;
   font-style: italic;
+}
+
+.category-label {
+  width: 200px;
+  display: block;
+}
+
+input[type="checkbox"] {
+  width: 20px;
+  padding: 3px;
+}
+
+.category-checkbox {
+  cursor: pointer;
+  float: right;
 }

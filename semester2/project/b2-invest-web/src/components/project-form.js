@@ -32,15 +32,36 @@ class ProjectForm extends Component {
     }
 
     componentDidMount() {
-        this.updateChecked();
+        this.populateCategoriesCheckboxes();
+        console.log(this.props.capitals);
+        console.log(this.props.categories);
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
             this.setState({editedProject: {...this.props.project}})
             this.updateChecked();
+            this.updateSelected();
             console.log('changed');
+            // console.log(this.state.editedProject)
         }
+    }
+
+    populateCategoriesCheckboxes = () => {
+        let categories = this.props.categories;
+        let checkboxes = []
+        categories.forEach(category => {
+            checkboxes.push(
+                {
+                    name: "categories",
+                    value: category.id,
+                    key: category.name,
+                    label: category.name,
+                    isChecked: this.props.project.categories.indexOf(category.id) !== -1,
+                }
+            )
+        })
+        this.setState({categories: checkboxes})
     }
 
     updateChecked = () => {
@@ -51,6 +72,17 @@ class ProjectForm extends Component {
         this.setState({categories: categories})
     }
 
+    updateSelected = () => {
+        let select = document.getElementById("capital");
+        for(let i, j = 0; i = select.options[j]; j++) {
+            if(i.value == this.props.project.capital) {
+                select.selectedIndex = j;
+                break;
+            }
+        }
+        console.log(select);
+    }
+
     cancelClicked = () => {
         this.props.cancelForm();
     }
@@ -58,7 +90,15 @@ class ProjectForm extends Component {
     inputChanged = event => {
         let project = this.state.editedProject
         project[event.target.name] = event.target.value;
-        this.setState({editedProject: project})
+        this.setState({editedProject: project});
+        // console.log(this.state.editedProject);
+    }
+
+    selectChanged = event => {
+        let project = this.state.editedProject;
+        project[event.target.name] = Number(event.target.value);
+        this.setState({editedProject: project});
+        console.log(this.state.editedProject);
     }
 
     checkboxChanged = event => {
@@ -124,17 +164,25 @@ class ProjectForm extends Component {
                     onChange={this.inputChanged} /><br />
 
                 <span>Capital</span><br />
-                <input type="number" name="capital" value={this.state.editedProject.capital}
-                    onChange={this.inputChanged} /><br />
+                <select defaultValue={this.props.project.capital} name="capital" id="capital" onChange={this.selectChanged}>
+                {this.props.capitals.map(item => (
+                    <option key={item.id} value={item.id}>{item.name}</option>
+                ))}
+                </select>
+
+                
                 
                 <span>Categories</span>
                 <ul>
                 {this.state.categories.map(item => (
                     <li key={item.key}>
-                        <label>
+                        <label className="category-label">
                         {item.label}
+                        <span className="category-checkbox">
                         <Checkbox name={item.name} value={item.value} checked={item.isChecked} onChange={this.checkboxChanged} />
-                        <br /></label>
+                        </span>
+                        <br />
+                        </label>
                     </li>
                 ))}
                 </ul>

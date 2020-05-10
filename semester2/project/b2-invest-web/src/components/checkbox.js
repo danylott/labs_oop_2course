@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Checkbox = ({ type = 'checkbox', name, value, checked = false, onChange }) => (
-  <input type={type} name={name} value={value} checked={checked} onChange={onChange} />
+  <input className="category-checkbox" type={type} name={name} value={value} checked={checked} onChange={onChange} />
 );
 
 Checkbox.propTypes = {

@@ -12,6 +12,8 @@ class ProjectAdmin extends Component {
 
   state = {
     projects: [],
+    capitals: [],
+    categories: [],
     selectedProject: null,
     editedProject: null,
     token: this.props.cookies.get('b2invest-token'),
@@ -19,6 +21,7 @@ class ProjectAdmin extends Component {
 
   componentDidMount() {
     if(this.state.token) {
+      // projects
       fetch(`${process.env.REACT_APP_API_URL}/api/projects/`, {
         method: 'GET',
         headers: {
@@ -26,7 +29,27 @@ class ProjectAdmin extends Component {
         }
       }).then( resp => resp.json())
       .then( res => this.setState({projects: res}))
-      .catch( error => console.log(error))
+      .catch( error => console.log(error));
+
+      // capitals
+      fetch(`${process.env.REACT_APP_API_URL}/api/capitals/`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Token ${this.state.token}`,
+        }
+      }).then( resp => resp.json())
+      .then( res => this.setState({capitals: res}))
+      .catch( error => console.log(error));
+
+      // categories
+      fetch(`${process.env.REACT_APP_API_URL}/api/categories/`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Token ${this.state.token}`,
+        }
+      }).then( resp => resp.json())
+      .then( res => this.setState({categories: res}))
+      .catch( error => console.log(error));
     } else {
       window.location.href = '/';
     }
@@ -79,7 +102,8 @@ class ProjectAdmin extends Component {
             <div>
               { !this.state.editedProject ? 
                 <ProjectDetails token={this.state.token} project={this.state.selectedProject} updateProject={this.loadProject}/>
-                : <ProjectFrom token={this.state.token} project={this.state.editedProject} cancelForm={this.cancelForm} 
+                : <ProjectFrom token={this.state.token} project={this.state.editedProject} capitals={this.state.capitals}
+                  categories={this.state.categories} cancelForm={this.cancelForm} 
                   newProject={this.addProject} editProject={this.replaceProject}/>}
             </div> 
           </div>
