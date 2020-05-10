@@ -12,29 +12,33 @@ class ProjectForm extends Component {
               value: 1,
               key: 'Category 1',
               label: 'Category 1',
-              isChecked: this.props.project.categories.indexOf(1) !== -1
+            //   isChecked: this.props.project.categories.indexOf(1) !== -1
             },
             {
               name: 'categories',
               value: 2,
               key: 'Category 2',
               label: 'Category 2',
-              isChecked: this.props.project.categories.indexOf(2) !== -1
+            //   isChecked: this.props.project.categories.indexOf(2) !== -1
             },
             {
               name: 'categories',
               value: 3,
               key: 'Category 3',
               label: 'Category 3',
-              isChecked: this.props.project.categories.indexOf(3) !== -1
+            //   isChecked: this.props.project.categories.indexOf(3) !== -1
             },
         ]
     }
 
+    componentDidMount() {
+        this.updateChecked();
+    }
+
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
+            this.setState({editedProject: {...this.props.project}})
             this.updateChecked();
-            this.setState({editedProject: {...this.props.project},})
             console.log('changed');
         }
     }
@@ -42,7 +46,7 @@ class ProjectForm extends Component {
     updateChecked = () => {
         let categories = this.state.categories;
         categories.forEach(category => {
-            category.isChecked = this.state.editedProject.categories.indexOf(category.value) !== -1;           
+            category.isChecked = this.props.project.categories.indexOf(category.value) !== -1;           
         })
         this.setState({categories: categories})
     }
@@ -74,7 +78,7 @@ class ProjectForm extends Component {
             }
         }   
         })
-        this.setState({categories: categories, editedProject: project})
+        this.setState({categories: categories, editedProject: project});
     }
     
     saveClicked = () => {
