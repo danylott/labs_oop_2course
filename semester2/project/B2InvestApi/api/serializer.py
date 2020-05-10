@@ -82,7 +82,6 @@ class ProjectSerializer(serializers.ModelSerializer):
         return post
 
 
-
 class RatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating

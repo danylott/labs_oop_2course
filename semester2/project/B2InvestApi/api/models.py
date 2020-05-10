@@ -20,9 +20,13 @@ class Capital(models.Model):
         return self.amount_of_money
 
 
+def upload_user(instance, filename):
+    return '/'.join(['users', str(instance.user.username), filename])
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=False, blank=False)
-    image = models.ImageField(upload_to="images/profiles/", null=True, blank=True)
+    image = models.ImageField(upload_to=upload_user, null=True, blank=True)
     phone = PhoneNumberField(null=True, blank=True)
     info = models.TextField(null=True, blank=True)
 
@@ -77,10 +81,14 @@ class Expert(Profile):
             return sum / len(projects)
 
 
+def upload_article(instance, filename):
+    return '/'.join(['projects', str(instance.name), filename])
+
+
 class Project(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
     description = models.TextField(null=True, blank=True)
-    image = models.ImageField(upload_to="images/projects/", null=True, blank=True)
+    image = models.ImageField(upload_to=upload_article, null=True, blank=True)
     categories = models.ManyToManyField(Category, related_name='project_categories')
     capital = models.ForeignKey(Capital, on_delete=models.DO_NOTHING, null=False, blank=False)
     entrepreneur = models.ForeignKey(Entrepreneur, on_delete=models.CASCADE, null=False, blank=False)
@@ -119,13 +127,21 @@ class Rating(models.Model):
         return self.stars
 
 
+def upload_article(instance, filename):
+    return '/'.join(['articles', str(instance.name), filename])
+
+
 class Article(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
     description = models.TextField(null=True, blank=True)
-    image = models.ImageField(upload_to="images/articles/", null=True, blank=True)
+    image = models.ImageField(upload_to=upload_article, null=True, blank=True)
+
+
+def upload_release(instance, filename):
+    return '/'.join(['releases', str(instance.name), filename])
 
 
 class Release(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
     description = models.TextField(null=True, blank=True)
-    image = models.ImageField(upload_to="images/releases/", null=True, blank=True)
+    image = models.ImageField(upload_to=upload_release, null=True, blank=True)

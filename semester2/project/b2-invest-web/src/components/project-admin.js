@@ -77,7 +77,7 @@ class ProjectAdmin extends Component {
 
   newProject = () => {
     this.setState({editedProject: {name: '', description: '', capital: 1,
-    categories: []}})
+    categories: [], image: null}})
   }
 
   cancelForm = () => {

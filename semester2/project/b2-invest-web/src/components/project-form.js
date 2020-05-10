@@ -6,29 +6,8 @@ class ProjectForm extends Component {
 
     state = {
         editedProject: {...this.props.project},
-        categories: [
-            {
-              name: 'categories',
-              value: 1,
-              key: 'Category 1',
-              label: 'Category 1',
-            //   isChecked: this.props.project.categories.indexOf(1) !== -1
-            },
-            {
-              name: 'categories',
-              value: 2,
-              key: 'Category 2',
-              label: 'Category 2',
-            //   isChecked: this.props.project.categories.indexOf(2) !== -1
-            },
-            {
-              name: 'categories',
-              value: 3,
-              key: 'Category 3',
-              label: 'Category 3',
-            //   isChecked: this.props.project.categories.indexOf(3) !== -1
-            },
-        ]
+        categories: [],
+        image: null,
     }
 
     componentDidMount() {
@@ -101,6 +80,10 @@ class ProjectForm extends Component {
         console.log(this.state.editedProject);
     }
 
+    imageChanged = event => {
+        this.setState({image: event.target.files[0]});
+    }
+
     checkboxChanged = event => {
         let categories = this.state.categories;
         let project = this.state.editedProject
@@ -122,6 +105,8 @@ class ProjectForm extends Component {
     }
     
     saveClicked = () => {
+        let new_project_id = -1;
+        console.log(this.state.editedProject);
         fetch(`${process.env.REACT_APP_API_URL}/api/projects/`, {
             method: 'POST',
             headers: {
@@ -130,7 +115,31 @@ class ProjectForm extends Component {
             },
             body: JSON.stringify(this.state.editedProject)
             }).then( resp => resp.json())
-            .then( res => this.props.newProject(res))
+            .then( res => {
+                this.props.newProject(res);
+                console.log(res);
+                new_project_id = res.id;
+
+                const uploadData = new FormData();
+                uploadData.append('image', this.state.image);
+                uploadData.append('capital', res.capital);
+                uploadData.append('categories', res.categories);
+                uploadData.append('name', res.name);
+                console.log(new_project_id);
+                if(new_project_id > 0) {
+                    console.log(this.state.image);
+                    fetch(`${process.env.REACT_APP_API_URL}/api/projects/${new_project_id}/`, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `Token ${this.props.token}`,
+                        },
+                        body: uploadData
+                        }).then( resp => resp.json())
+                        .then( res => console.log(res))
+                        .catch( error => console.log(error))
+                }
+                
+            })
             .catch( error => console.log(error))
     }
 
@@ -186,6 +195,9 @@ class ProjectForm extends Component {
                     </li>
                 ))}
                 </ul>
+
+                <span>Project Image</span>
+                <input type="file" onChange={this.imageChanged}/>
 
                 {/* check if exist project or we just creating it */}
                 {!this.props.project.id ? 

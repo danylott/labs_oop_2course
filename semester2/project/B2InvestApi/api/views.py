@@ -150,7 +150,6 @@ class ProjectViewSet(viewsets.ModelViewSet):
     # filterset_class = ProjectFilter
 
     def get_permissions(self):
-        # Your logic should be all here
         if self.request.method == 'GET':
             self.permission_classes = [AllowAny, ]
         else:
