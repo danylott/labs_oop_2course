@@ -16,3 +16,23 @@ void SequentialBubbleSort::sort() {
             if (array[j] > array[j+1])
                 std::swap(array[j], array[j+1]);
 }
+
+std::vector<std::vector<int>> ParallelBubbleSort::split_array(size_t n) {
+    std::vector<std::vector<int>> result;
+
+    size_t length = array.size() / n;
+    size_t remain = array.size() % n;
+
+    size_t begin = 0;
+    size_t end = 0;
+
+    for (size_t i = 0; i < std::min(n, array.size()); i++) {
+        end += (remain > 0) ? (length + ((remain--) != 0)) : length;
+
+        result.emplace_back(array.begin() + begin, array.begin() + end);
+
+        begin = end;
+    }
+
+    return result;
+}
