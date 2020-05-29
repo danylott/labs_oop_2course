@@ -4,8 +4,8 @@ std::vector<int> BubbleSort::get_array() {
     return this->array;
 }
 
-void BubbleSort::set_array(std::vector<int> array) {
-    this->array = array;
+void BubbleSort::set_array(std::vector<int> arr) {
+    this->array = arr;
 }
 
 void SequentialBubbleSort::sort() {
