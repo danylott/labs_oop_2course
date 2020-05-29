@@ -6,6 +6,9 @@
 #include <vector>
 #include <random>
 #include <algorithm>
+#include <chrono>
+#include <ctime>
+#include <string>
 
 using std::vector;
 using std::cin;
@@ -72,5 +75,39 @@ TEST_CASE("merge_array", "[threading]") {
     auto pbs = new ParallelBubbleSort();
     pbs->merge_array(vector<vector<int>>{vector<int>{1,2}, vector<int>{3,4}, vector<int>{5}});
     REQUIRE(pbs->get_array() == vector<int>{1, 2, 3, 4, 5});
+}
+
+TEST_CASE("benchmark for BubbleSort", "[threading]") {
+    BubbleSort *bs = nullptr;
+    std::string benchmark_type;
+
+    std::chrono::time_point<std::chrono::system_clock> start, end;
+
+    size_t size = 10000;
+    auto vec = create_random_vector(size, 10000);
+    auto sorted = vec;
+    std::sort(sorted.begin(), sorted.end());
+
+    SECTION("SequentialBubbleSort") {
+        bs = new SequentialBubbleSort();
+        benchmark_type = "SequentialBubbleSort";
+    }
+
+    SECTION("ParallelBubbleSort") {
+        bs = new ParallelBubbleSort();
+        benchmark_type = "ParallelBubbleSort";
+    }
+
+    bs->set_array(vec);
+
+    start = std::chrono::system_clock::now();
+
+    bs->sort();
+
+    end = std::chrono::system_clock::now();
+
+    std::chrono::duration<double> elapsed_seconds = end - start;
+    std::cout << "elapsed time (size = " + std::to_string(size) + ") for " + benchmark_type + " algorithm: " << elapsed_seconds.count() << "s\n";
+    REQUIRE(bs->get_array() == sorted);
 }
 
