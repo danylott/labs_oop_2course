@@ -7,6 +7,7 @@
 class BubbleSort {
 protected:
     std::vector<int> array;
+    static void simple_bubble_sort(std::vector<int>& vec);
 
 public:
     BubbleSort() = default;

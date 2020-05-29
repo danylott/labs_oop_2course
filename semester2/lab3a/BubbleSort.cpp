@@ -10,11 +10,15 @@ void BubbleSort::set_array(std::vector<int> arr) {
     this->array = std::move(arr);
 }
 
+void BubbleSort::simple_bubble_sort(std::vector<int> &vec) {
+    for (size_t i = 0; i < vec.size() - 1; i++)
+        for (size_t j = 0; j < vec.size() - i - 1; j++)
+            if (vec[j] > vec[j+1])
+                std::swap(vec[j], vec[j+1]);
+}
+
 void SequentialBubbleSort::sort() {
-    for (size_t i = 0; i < array.size() - 1; i++)
-        for (size_t j = 0; j < array.size() - i - 1; j++)
-            if (array[j] > array[j+1])
-                std::swap(array[j], array[j+1]);
+    simple_bubble_sort(array);
 }
 
 std::vector<std::vector<int>> ParallelBubbleSort::split_array(size_t n) {
