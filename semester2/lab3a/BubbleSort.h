@@ -23,14 +23,16 @@ public:
     void sort() override;
 };
 
-class ParallelBubbleSort : BubbleSort {
+class ParallelBubbleSort : public BubbleSort {
 public:
     ParallelBubbleSort() = default;
     explicit ParallelBubbleSort(std::vector<int> array) : BubbleSort(std::move(array)) {};
     void sort() override;
 
-private:
+    // should be private, but here for tests - public
+public:
     std::vector<std::vector<int>> split_array(size_t n);
+    void merge_array(std::vector<std::vector<int>> vectors);
 };
 
 #endif //LAB3A_BUBBLESORT_H
