@@ -83,7 +83,7 @@ TEST_CASE("benchmark for BubbleSort", "[threading]") {
 
     std::chrono::time_point<std::chrono::system_clock> start, end;
 
-    size_t size = 10000;
+    size_t size = 20000;
     auto vec = create_random_vector(size, 10000);
     auto sorted = vec;
     std::sort(sorted.begin(), sorted.end());
