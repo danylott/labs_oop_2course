@@ -1,6 +1,8 @@
 #include "BubbleSort.h"
 
 #include <algorithm>
+#include <thread>
+#include <iostream>
 
 std::vector<int> BubbleSort::get_array() {
     return this->array;
@@ -38,7 +40,17 @@ std::vector<std::vector<int>> ParallelBubbleSort::split_array(size_t n) {
 }
 
 void ParallelBubbleSort::sort() {
-
+    size_t thread_count = std::thread::hardware_concurrency();
+    auto vectors = split_array(thread_count);
+    std::vector<std::thread> threads;
+    threads.reserve(vectors.size());
+    for(auto & vec : vectors) {
+        threads.emplace_back(simple_bubble_sort, std::ref(vec));
+    }
+    for(auto& th : threads) {
+        th.join();
+    }
+    merge_array(vectors);
 }
 
 void ParallelBubbleSort::merge_array(std::vector<std::vector<int>> vectors) {
